@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <title>Education OS · Portfolio Case Study | Multi-Tenant Learning Architecture</title>
+  <meta name="description" content="From a personal learning problem to a live multi-tenant education platform. Product design and AI-assisted systems engineering case study." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Decorative Visual Scroll Progress Bar (aria-hidden per modern-web-guidance) -->
+  <div id="page-scroll-progress" aria-hidden="true"></div>
+
+  <main>
+    <!-- ======================================================================
+         01 / OVERVIEW & HERO (GREEN 1 CENTERED ON HORIZONTAL AXIS WITH HERO)
+         ====================================================================== -->
+    <section id="overview" class="section-block">
+      <div class="container">
+        <div class="hero-layout">
+          <div>
+            <div class="section-meta">
+              <span class="num">01</span>
+              <span class="line" aria-hidden="true"></span>
+              <span>Overview · Portfolio Case Study</span>
+            </div>
+            <h1 class="display-hero">
+              Education OS
+              <span>From a personal learning problem to a live multi-tenant education platform.</span>
+            </h1>
+            <p class="lead-prose" style="margin-top: 1.5rem;">
+              Education OS is a live, continuously evolving multi-tenant learning platform for specialised, coach-led education. It brings learning materials, assignments, private submissions, feedback and live teaching into one protected environment while allowing each tenant to retain its own curriculum, workflows, branding and permissions.
+            </p>
+            <div class="action-row">
+              <a href="#platform-presentation" class="btn-minimal">Watch Platform Presentation ↓</a>
+              <a href="#journey" class="btn-minimal outline">Explore Journey Timeline →</a>
+            </div>
+          </div>
+
+          <!-- Green 1: Open Hairline Specification Ledger Centered Vertically With Hero -->
+          <div class="spec-ledger">
+            <div class="spec-row">
+              <span class="spec-key">Designer</span>
+              <span class="spec-val" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                <strong>Matt Gidaszewski</strong>
+                <a href="https://www.linkedin.com/in/mattgidaszewski/" target="_blank" rel="noopener noreferrer" style="color: var(--fg-secondary); text-decoration: underline; font-size: 0.84rem;">linkedin.com/in/mattgidaszewski ↗</a>
+                <a href="https://www.portfoliomg.com" target="_blank" rel="noopener noreferrer" style="color: var(--fg-secondary); text-decoration: underline; font-size: 0.84rem;">www.portfoliomg.com ↗</a>
+              </span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">Role</span>
+              <span class="spec-val">Product Designer / Product Builder</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">Project Type</span>
+              <span class="spec-val">Zero-to-one product, evolving multi-tenant SaaS</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">Involvement</span>
+              <span class="spec-val">Product definition, UX architecture, interface design, workflow design, AI-assisted implementation, browser testing and iteration</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">Technology</span>
+              <span class="spec-val" style="font-family: var(--font-mono); font-size: 0.82rem;">React · TypeScript · Supabase · Daily.co · Bunny · Lovable</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-key">Status</span>
+              <span class="spec-val" style="color: var(--accent-emerald);">● Live product in active use and continued development</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PLATFORM PRESENTATION VIDEO SECTION (RIGHT UNDER HERO, CLEAN)
+         ====================================================================== -->
+    <section id="platform-presentation" class="video-showcase-section" aria-label="Platform Video Presentation">
+      <div class="container">
+        <div class="video-header-bar">
+          <div>
+            <h2 class="section-title" style="margin-bottom: 0.35rem;">
+              Presenting <em>Education OS in action</em>
+            </h2>
+            <p class="body-prose" style="max-width: 64ch;">
+              This walkthrough showcases the <strong>Melodina Hub</strong> tenant, a real music school that has already been using the platform in active production for more than six months, demonstrating how curriculum libraries, persistent homework, private practice recordings and live teaching work together in practice.
+            </p>
+          </div>
+        </div>
+
+        <!-- 16:9 Widescreen Video Stage (Chapters bar removed per annotation) -->
+        <div class="video-stage-wrapper">
+          <video
+            id="platform-presentation-video"
+            class="platform-video-el"
+            controls
+            preload="metadata"
+            playsinline
+          >
+            <source src="presentation.mp4" type="video/mp4" />
+            Your browser does not support HTML5 video.
+          </video>
+
+          <div id="video-poster-overlay" class="video-poster-overlay" role="button" tabindex="0" aria-label="Play Education OS Platform Presentation">
+            <div class="video-overlay-top">
+              <span>EDUCATION OS // LIVE PRODUCT WALKTHROUGH</span>
+              <span>TENANTS: MELODINA HUB · MIRA TREINO</span>
+            </div>
+
+            <div class="video-play-center">
+              <span class="play-trigger-btn" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M7 5.5V18.5L18 12L7 5.5Z" />
+                </svg>
+              </span>
+              <div class="video-stage-title">Watch Platform Presentation</div>
+              <div class="video-stage-sub">
+                Click to play the walkthrough video or select a local video file directly in your browser.
+              </div>
+            </div>
+
+            <div class="video-overlay-bottom">
+              <span>REACT · TYPESCRIPT · SUPABASE · DAILY.CO · BUNNY</span>
+              <span>CLICK TO PLAY</span>
+            </div>
+          </div>
+          <input type="file" id="local-video-picker" accept="video/*" style="display: none;" aria-hidden="true" />
+        </div>
+
+        <!-- Green 2: Moved Down Directly Under the Video -->
+        <div class="overview-columns">
+          <div>
+            <span class="col-kicker">Platform Architecture</span>
+            <h3 class="col-heading">Protected Multi-Tenant Environment for Coach-Led Schools</h3>
+            <p class="body-prose">
+              Each school operates inside a protected boundary where curriculum, assignments, private media submissions, feedback and live classes remain connected over time without forcing different disciplines into a generic LMS template.
+            </p>
+          </div>
+          <div>
+            <span class="col-kicker" style="color: var(--accent-amber);">Practice Evolution</span>
+            <h3 class="col-heading">Carrying Design Decisions Into Working Software</h3>
+            <p class="body-prose">
+              Instead of stopping at flows, screens and prototypes, I used AI-assisted development to carry product decisions into a working React, TypeScript and Supabase application. The live product became part of the design loop, allowing me to test routing, permissions, data states and real learning workflows in context.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         02 / USER EXPERIENCE: COACH & EDUCATOR POINT OF VIEW
+         ====================================================================== -->
+    <section id="ux-coach" class="section-block">
+      <div class="container">
+        <div class="section-meta">
+          <span class="num">02</span>
+          <span class="line" aria-hidden="true"></span>
+          <span>Coach Panel &amp; Classroom</span>
+        </div>
+        <h2 class="ux-big-headline">
+          User Experience Level Access <span class="role-coach">Coach</span>
+        </h2>
+
+        <div class="ux-coach-grid">
+          <!-- 01 Building Their Own Library -->
+          <article class="ux-capability">
+            <span class="ux-cap-index" style="color: var(--accent-indigo);">01 · Library</span>
+            <h3 class="ux-cap-title">Building Their Own Library</h3>
+            <ul class="ux-cap-bullets">
+              <li><strong>Create courses &amp; lessons:</strong> Upload backing tracks, sheet music, or movement drills.</li>
+              <li><strong>Private school access:</strong> Keep all learning materials scoped strictly to approved school members.</li>
+              <li><strong>Attach to homework:</strong> Link library items directly onto student assignments.</li>
+            </ul>
+          </article>
+
+          <!-- 02 Assigning Homework -->
+          <article class="ux-capability">
+            <span class="ux-cap-index" style="color: var(--accent-amber);">02 · Homework</span>
+            <h3 class="ux-cap-title">Assigning Homework</h3>
+            <ul class="ux-cap-bullets">
+              <li><strong>Set structured practice:</strong> Assign tasks to individuals or groups between lessons.</li>
+              <li><strong>Review private uploads:</strong> Inspect student audio or video submissions safely.</li>
+              <li><strong>Timestamped &amp; visual feedback:</strong> Leave time-coded notes or draw directly on video frames.</li>
+            </ul>
+          </article>
+
+          <!-- 03 Checking the Attendance List -->
+          <article class="ux-capability">
+            <span class="ux-cap-index" style="color: var(--accent-emerald);">03 · Attendance</span>
+            <h3 class="ux-cap-title">Checking the Attendance List</h3>
+            <ul class="ux-cap-bullets">
+              <li><strong>Approve members:</strong> Review and accept invited students into the school workspace.</li>
+              <li><strong>Live attendance log:</strong> Check who attended scheduled classes and track history.</li>
+              <li><strong>Student progress view:</strong> See active members, pending invites, and completed work.</li>
+            </ul>
+          </article>
+
+          <!-- 04 The Live Classroom -->
+          <article class="ux-capability">
+            <span class="ux-cap-index" style="color: var(--accent-coral);">04 · Classroom</span>
+            <h3 class="ux-cap-title">The Live Classroom</h3>
+            <ul class="ux-cap-bullets">
+              <li><strong>Built-in live rooms:</strong> Host Daily.co classes inside the school without external links.</li>
+              <li><strong>Dual-channel audio:</strong> Separate voice mic from instrument or backing-track audio.</li>
+              <li><strong>In-call student context:</strong> View the student's homework and past recordings while teaching.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         03 / USER EXPERIENCE: STUDENT & LEARNER POINT OF VIEW
+         ====================================================================== -->
+    <section id="ux-student" class="section-block">
+      <div class="container">
+        <div class="section-meta">
+          <span class="num">03</span>
+          <span class="line" aria-hidden="true"></span>
+          <span>My Corner &amp; Classroom</span>
+        </div>
+        <h2 class="ux-big-headline">
+          User Experience Level Access <span class="role-student">Student</span>
+        </h2>
+
+        <div class="ux-student-zones">
+          <!-- Left Zone: MY CORNER FUNCTIONALITIES -->
+          <div class="ux-zone-column">
+            <div class="ux-zone-header">
+              <span class="ux-zone-kicker" style="color: var(--accent-emerald);">01 · Personal Workspace</span>
+              <h3 class="ux-zone-title">My Corner</h3>
+            </div>
+
+            <div class="ux-zone-list">
+              <div class="ux-zone-item">
+                <span class="ux-zone-code" style="color: var(--accent-emerald);">MC · 01</span>
+                <p><strong>Homework &amp; Feedback:</strong> View assigned tasks, upload practice recordings, and revisit coach notes or video drawings anytime.</p>
+              </div>
+
+              <div class="ux-zone-item">
+                <span class="ux-zone-code" style="color: var(--accent-emerald);">MC · 02</span>
+                <p><strong>Training Log:</strong> Log daily practice sessions and track personal progress between live classes.</p>
+              </div>
+
+              <div class="ux-zone-item">
+                <span class="ux-zone-code" style="color: var(--accent-emerald);">MC · 03</span>
+                <p><strong>Personal Uploads:</strong> Store private practice audio takes and training footage in one protected place.</p>
+              </div>
+
+              <div class="ux-zone-item">
+                <span class="ux-zone-code" style="color: var(--accent-emerald);">MC · 04</span>
+                <p><strong>Recorded Sessions:</strong> Replay past live lessons and coach demonstrations whenever needed.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Zone: THE CLASSROOM & SHARED LEARNING -->
+          <div class="ux-zone-column">
+            <div class="ux-zone-header">
+              <span class="ux-zone-kicker" style="color: var(--accent-indigo);">02 · Live &amp; Shared Space</span>
+              <h3 class="ux-zone-title">The Classroom &amp; Shared Learning</h3>
+            </div>
+
+            <div class="ux-zone-list">
+              <div class="ux-zone-item">
+                <span class="ux-zone-code" style="color: var(--accent-indigo);">CL · 01</span>
+                <p><strong>Live Classroom:</strong> Join real-time classes inside the school with clear voice and music audio channels.</p>
+              </div>
+
+              <div class="ux-zone-item">
+                <span class="ux-zone-code" style="color: var(--accent-indigo);">CL · 02</span>
+                <p><strong>Lesson Context:</strong> Keep active homework, reference tracks, and recent coach notes open during the call.</p>
+              </div>
+
+              <div class="ux-zone-item">
+                <span class="ux-zone-code" style="color: var(--accent-indigo);">CL · 03</span>
+                <p><strong>Learning Library:</strong> Browse the coach's structured courses, sheet music, and technique breakdowns.</p>
+              </div>
+
+              <div class="ux-zone-item">
+                <span class="ux-zone-code" style="color: var(--accent-indigo);">CL · 04</span>
+                <p><strong>Community &amp; Messaging:</strong> Message the coach directly and participate in the school feed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         04 / THE PROBLEM (2-COLUMN PROSE + GREEN 3 RIGHT UNDERNEATH)
+         ====================================================================== -->
+    <section id="problem" class="section-block">
+      <div class="container">
+        <div class="section-meta">
+          <span class="num">04</span>
+          <span class="line" aria-hidden="true"></span>
+          <span>The Problem</span>
+        </div>
+        <h2 class="section-title">
+          It did not begin with an ambition to build an LMS.<br />
+          <em>It began with a problem I experienced personally while studying music.</em>
+        </h2>
+
+        <!-- Content from 02 arranged into Two Columns -->
+        <div class="two-col-editorial">
+          <div>
+            <p class="body-prose">
+              Between lessons, I needed to keep references together, send learning materials back and forth, record my practice for my coach and receive feedback on those recordings.
+            </p>
+            <p class="body-prose">
+              The workflow was fragmented across different tools, tedious to manage and difficult to revisit later. I could not find a platform that handled this ongoing learner-coach relationship in the way I needed. <strong>So I started building one.</strong>
+            </p>
+          </div>
+
+          <div class="editorial-quote">
+            <span class="col-kicker" style="color: var(--accent-amber);">Initial Product Hypothesis</span>
+            <p>
+              “References, practice, assignments, recordings and feedback should form one continuous learning relationship rather than disappear across messages, links and separate services.”
+            </p>
+          </div>
+        </div>
+
+        <!-- Green 3: Placed Right Underneath the Two-Column 02 Content -->
+        <div class="contrast-underneath">
+          <div class="contrast-group">
+            <div class="contrast-header">
+              <span style="color: var(--accent-coral);">Before · Fragmented Tool Sprawl</span>
+              <span style="color: var(--fg-muted);">Ephemeral &amp; Disconnected</span>
+            </div>
+            <div class="tag-list">
+              <span class="tag-minimal rose">Scattered Chat Threads</span>
+              <span class="tag-minimal rose">Unlisted Video Links</span>
+              <span class="tag-minimal rose">Expired File Transfers</span>
+              <span class="tag-minimal rose">Lost Practice Audio</span>
+              <span class="tag-minimal rose">Unlinked Coach Notes</span>
+              <span class="tag-minimal rose">Separate Call Links</span>
+            </div>
+          </div>
+
+          <div class="contrast-group">
+            <div class="contrast-header">
+              <span style="color: var(--accent-emerald);">After · Continuous Learning Relationship</span>
+              <span style="color: var(--accent-emerald);">Persistent &amp; Tenant-Scoped</span>
+            </div>
+            <div class="tag-list">
+              <span class="tag-minimal teal">01 References</span>
+              <span class="tag-minimal teal">→ 02 Practice</span>
+              <span class="tag-minimal teal">→ 03 Assignments</span>
+              <span class="tag-minimal teal">→ 04 Private Recordings</span>
+              <span class="tag-minimal teal">→ 05 Contextual Feedback</span>
+              <span class="tag-minimal teal">→ 06 Live Teaching</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         05 / THE JOURNEY: MINIMALIST HORIZONTAL TIMELINE (FEB 2026 TO OCT 2026)
+         ====================================================================== -->
+    <section id="journey" class="timeline-section" aria-label="05 The Journey Horizontal Timeline">
+      <div class="container">
+        <div class="timeline-header-top">
+          <div class="section-meta">
+            <span class="num">05</span>
+            <span class="line" aria-hidden="true"></span>
+            <span>The Journey · 8-Month Progression (Feb 2026 to Present)</span>
+          </div>
+          <h2 class="section-title" style="margin-bottom: 0.4rem;">
+            From personal problem <em>to live platform</em>
+          </h2>
+          <p class="body-prose" style="max-width: 58ch;">
+            Eight months of iterative design and implementation. Scroll horizontally, drag, or use the date controls below.
+          </p>
+        </div>
+
+        <div class="timeline-controls-bar">
+          <div class="timeline-date-tabs" role="tablist" aria-label="Timeline dates">
+            <button type="button" class="stage-tab active" data-stage-index="0">Feb 2026</button>
+            <button type="button" class="stage-tab" data-stage-index="1">Mar - Apr 2026</button>
+            <button type="button" class="stage-tab" data-stage-index="2">May - Jun 2026</button>
+            <button type="button" class="stage-tab" data-stage-index="3">Jul - Aug 2026</button>
+            <button type="button" class="stage-tab" data-stage-index="4">Sep - Oct 2026</button>
+            <button type="button" class="stage-tab" data-stage-index="5">Q4 2026+</button>
+          </div>
+          <div class="timeline-arrows">
+            <button type="button" id="timeline-prev-btn" class="arrow-btn" aria-label="Scroll timeline to previous date">
+              <span aria-hidden="true">←</span> Prev
+            </button>
+            <button type="button" id="timeline-next-btn" class="arrow-btn primary" aria-label="Scroll timeline to next date">
+              Next <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edge-to-Edge Horizontal Scroll Track with Left & Right Blur Zones -->
+      <div class="timeline-viewport-wrap">
+        <div class="timeline-edge-blur left" aria-hidden="true"></div>
+        <div class="timeline-edge-blur right" aria-hidden="true"></div>
+
+        <div id="timeline-scroller" class="timeline-scroller" tabindex="0" aria-label="Horizontal timeline stages">
+          <div id="timeline-track" class="timeline-track">
+            <!-- Milestone 1: Feb 2026 (8 Months Ago) -->
+            <article class="timeline-stage" data-accent="amber">
+              <span class="stage-month-badge">Month 01 · 8 Months Ago</span>
+              <div class="stage-date">Feb 2026</div>
+              <h3 class="stage-title">Personal Music Problem</h3>
+              <p class="stage-summary">
+                Started from personal friction experienced between music lessons while trying to keep practice and coach feedback in one place.
+              </p>
+              <ul class="stage-bullets">
+                <li><strong>Audit of fragmented workflows</strong> across chat threads, cloud links and voice notes.</li>
+                <li><strong>Core product hypothesis</strong> uniting references, practice, recordings and feedback.</li>
+                <li><strong>First relational data model</strong> for ongoing learner-coach continuity.</li>
+              </ul>
+            </article>
+
+            <!-- Milestone 2: Mar - Apr 2026 -->
+            <article class="timeline-stage" data-accent="amber">
+              <span class="stage-month-badge">Months 02-03 · Stage 1</span>
+              <div class="stage-date">Mar - Apr 2026</div>
+              <h3 class="stage-title">Melodina Hub</h3>
+              <p class="stage-summary">
+                Built and launched the first working application focused on music coaching and longitudinal practice history.
+              </p>
+              <ul class="stage-bullets">
+                <li><strong>Connected music workspace</strong> linking lesson references and assignments.</li>
+                <li><strong>Private practice audio uploads</strong> with persistent coach feedback threads.</li>
+                <li><strong>Live classroom exploration</strong> separating voice mic from accompaniment audio.</li>
+                <li><strong>Active onboarding</strong> of a real music coach and learners for longitudinal use.</li>
+              </ul>
+            </article>
+
+            <!-- Milestone 3: May - Jun 2026 -->
+            <article class="timeline-stage" data-accent="coral">
+              <span class="stage-month-badge">Months 04-05 · Stage 2</span>
+              <div class="stage-date">May - Jun 2026</div>
+              <h3 class="stage-title">Mira Treino</h3>
+              <p class="stage-summary">
+                Adapted the coach-led model to martial arts, proving the relationship loop held while media workflows diverged.
+              </p>
+              <ul class="stage-bullets">
+                <li><strong>Training-video submission pipeline</strong> for physical movement and sparring drills.</li>
+                <li><strong>Time-coded coach review</strong> pinned to exact timestamps in movement footage.</li>
+                <li><strong>On-video telestration &amp; drawing</strong> for visual posture and form annotation.</li>
+                <li><strong>Key architectural insight:</strong> shared coaching loop vs. discipline-specific modules.</li>
+              </ul>
+            </article>
+
+            <!-- Milestone 4: Jul - Aug 2026 -->
+            <article class="timeline-stage" data-accent="emerald">
+              <span class="stage-month-badge">Months 06-07 · Stage 3</span>
+              <div class="stage-date">Jul - Aug 2026</div>
+              <h3 class="stage-title">Education OS</h3>
+              <p class="stage-summary">
+                Unified Melodina Hub and Mira Treino as isolated tenants on a single multi-tenant React, TypeScript and Supabase architecture.
+              </p>
+              <ul class="stage-bullets">
+                <li><strong>Separation of identity vs. access</strong> via tenant membership and educator approval.</li>
+                <li><strong>Row Level Security (RLS)</strong> and short-lived signed URLs for private learner media.</li>
+                <li><strong>Per-tenant configuration</strong> for branding, curriculum structure and enabled modules.</li>
+                <li><strong>Separation of platform admin</strong> from school-level educator authority.</li>
+              </ul>
+            </article>
+
+            <!-- Milestone 5: Sep - Oct 2026 (Now) -->
+            <article class="timeline-stage" data-accent="indigo">
+              <span class="stage-month-badge">Month 08 · Current Live Phase</span>
+              <div class="stage-date">Sep - Oct 2026</div>
+              <h3 class="stage-title">Strengthen &amp; Validate</h3>
+              <p class="stage-summary">
+                Hardening multi-tenant edge cases, permission synchronization and white-label administration in active production.
+              </p>
+              <ul class="stage-bullets">
+                <li><strong>Fail-closed tenant switching</strong> preventing cross-school UI or control leakage.</li>
+                <li><strong>Direct-link context preservation</strong> returning users to deep routes after sign-in.</li>
+                <li><strong>Explicit onboarding states</strong> for pending, missing or unapproved memberships.</li>
+                <li><strong>Ongoing longitudinal testing</strong> with live educators and students.</li>
+              </ul>
+            </article>
+
+            <!-- Milestone 6: Next Horizon -->
+            <article class="timeline-stage" data-accent="emerald">
+              <span class="stage-month-badge">Next Phase · Future Direction</span>
+              <div class="stage-date">Q4 2026+</div>
+              <h3 class="stage-title">Additional Niche Pilots</h3>
+              <p class="stage-summary">
+                Validating the shared multi-tenant foundation across new specialised coaching communities without generic LMS compromises.
+              </p>
+              <ul class="stage-bullets">
+                <li><strong>Self-serve white-label provisioning</strong> for new niche schools and academies.</li>
+                <li><strong>Documented longitudinal evidence</strong> from Melodina Hub &amp; Mira Treino cohorts.</li>
+                <li><strong>Before/after iteration telemetry</strong> and verified workflow completion metrics.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         06 / CORE USER JOURNEYS
+         ====================================================================== -->
+    <section id="user-journeys" class="section-block">
+      <div class="container">
+        <div class="section-meta">
+          <span class="num">06</span>
+          <span class="line" aria-hidden="true"></span>
+          <span>Core User Journeys</span>
+        </div>
+        <h2 class="section-title">
+          Three foundational workflows across <em>every tenant workspace.</em>
+        </h2>
+
+        <div class="minimal-tabs" role="tablist">
+          <button type="button" class="minimal-tab-btn active" data-journey-target="journey-onboarding">
+            01 · Invitation, Onboarding &amp; Access
+          </button>
+          <button type="button" class="minimal-tab-btn" data-journey-target="journey-homework">
+            02 · Homework &amp; Feedback
+          </button>
+          <button type="button" class="minimal-tab-btn" data-journey-target="journey-live">
+            03 · Live Teaching
+          </button>
+        </div>
+
+        <!-- Journey 1 -->
+        <div id="journey-onboarding" class="journey-panel active">
+          <div>
+            <span class="col-kicker">Access Architecture</span>
+            <h3 class="col-heading" style="font-size: 1.65rem;">Invitation, onboarding and access</h3>
+            <p class="body-prose">
+              A learner enters through a tenant-specific invitation. Authentication confirms identity, while membership and approval determine whether the learner can enter that school's workspace.
+            </p>
+            <p class="body-prose">
+              The product handles <strong>pending membership, approval, missing membership and direct-link return</strong> as explicit states rather than treating them as generic errors.
+            </p>
+          </div>
+          <div class="clean-steps">
+            <div class="clean-step-row">
+              <span class="clean-step-code">STATE 01</span>
+              <span>Learner enters through a tenant-specific invitation link</span>
+            </div>
+            <div class="clean-step-row">
+              <span class="clean-step-code">STATE 02</span>
+              <span>Authentication confirms identity (distinct from school membership)</span>
+            </div>
+            <div class="clean-step-row">
+              <span class="clean-step-code">STATE 03</span>
+              <span>Pending or missing membership handled as explicit UI states</span>
+            </div>
+            <div class="clean-step-row">
+              <span class="clean-step-code">STATE 04</span>
+              <span>Educator approval unlocks workspace and preserves direct-link return</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Journey 2 -->
+        <div id="journey-homework" class="journey-panel">
+          <div>
+            <span class="col-kicker" style="color: var(--accent-amber);">Persistence Decision</span>
+            <h3 class="col-heading" style="font-size: 1.65rem;">Homework and feedback</h3>
+            <p class="body-prose">
+              The key product decision is <strong>persistence</strong>. Homework is not treated as a temporary message exchange. Assignment state remains visible, submissions stay connected to the relevant work and feedback can be revisited as part of the learner's history.
+            </p>
+            <p class="body-prose">
+              Private files are resolved only for authorised users and delivered through <strong>short-lived signed access</strong> rather than public file URLs.
+            </p>
+          </div>
+          <div class="clean-steps">
+            <div class="clean-step-row">
+              <span class="clean-step-code">STEP 01</span>
+              <span>Educator assigns work → learner receives structured instructions</span>
+            </div>
+            <div class="clean-step-row">
+              <span class="clean-step-code">STEP 02</span>
+              <span>Learner submits private practice recording or training video</span>
+            </div>
+            <div class="clean-step-row">
+              <span class="clean-step-code">STEP 03</span>
+              <span>Coach is notified and reviews private media via short-lived signed access</span>
+            </div>
+            <div class="clean-step-row">
+              <span class="clean-step-code">STEP 04</span>
+              <span>Learner receives persistent feedback connected to their learning history</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Journey 3 -->
+        <div id="journey-live" class="journey-panel">
+          <div>
+            <span class="col-kicker" style="color: var(--accent-indigo);">Real-Time Classroom</span>
+            <h3 class="col-heading" style="font-size: 1.65rem;">Live teaching</h3>
+            <p class="body-prose">
+              Learner opens the tenant classroom → access is validated → learner joins the live session → teaching continues inside the wider learning workflow.
+            </p>
+            <p class="body-prose">
+              For music teaching, the product has explored separating the normal microphone channel from accompaniment audio so conversation and music can be controlled independently.
+            </p>
+          </div>
+          <div class="clean-steps">
+            <div class="clean-step-row">
+              <span class="clean-step-code">LIVE 01</span>
+              <span>Learner opens the tenant classroom inside the school workspace</span>
+            </div>
+            <div class="clean-step-row">
+              <span class="clean-step-code">LIVE 02</span>
+              <span>Tenant membership and live classroom permissions are validated</span>
+            </div>
+            <div class="clean-step-row">
+              <span class="clean-step-code">LIVE 03</span>
+              <span>Learner joins Daily.co session (independent mic + accompaniment audio exploration)</span>
+            </div>
+            <div class="clean-step-row">
+              <span class="clean-step-code">LIVE 04</span>
+              <span>Teaching continues seamlessly inside the wider learning workflow</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         07 & 08 / AI-ASSISTED DESIGN & WHAT WORKING SOFTWARE EXPOSED
+         ====================================================================== -->
+    <section id="ai-development" class="section-block">
+      <div class="container">
+        <div class="two-col-editorial" style="margin-top: 0;">
+          <div>
+            <div class="section-meta">
+              <span class="num">07</span>
+              <span class="line" aria-hidden="true"></span>
+              <span>AI-Assisted Design &amp; Development</span>
+            </div>
+            <h2 class="section-title" style="font-size: 2.1rem;">
+              Extending design practice into <em>working software</em>
+            </h2>
+            <p class="body-prose">
+              Education OS became an experiment in how far I could extend my practice as a product designer using AI-assisted development. My working loop became:
+            </p>
+            <div class="editorial-quote" style="border-left-color: var(--accent-indigo); margin: 1.5rem 0;">
+              <p style="font-size: 1.05rem;">
+                Define the workflow → implement it → exercise it in the browser → inspect unexpected behaviour → revise the product logic → test again
+              </p>
+            </div>
+            <p class="body-prose">
+              React and TypeScript provide the application layer. Supabase provides authentication, Postgres data, Row Level Security, SQL functions and private Storage. Daily.co powers live classes, while Bunny remains part of the media ecosystem.
+            </p>
+            <p class="body-prose">
+              AI accelerated implementation, but it did not remove the need for product judgement. Generated changes still needed to be reviewed against the intended user journey, tenant boundaries and existing data. A technically successful implementation could still represent the wrong product decision.
+            </p>
+          </div>
+
+          <div>
+            <div class="section-meta">
+              <span class="num">08</span>
+              <span class="line" aria-hidden="true"></span>
+              <span>What Working Software Exposed</span>
+            </div>
+            <h2 class="section-title" style="font-size: 2.1rem;">
+              Implementation as <em>design evidence</em>
+            </h2>
+            <p class="body-prose" style="margin-bottom: 1.5rem;">
+              Moving beyond static screens surfaced product-design problems that are easy to miss in Figma:
+            </p>
+            <div class="comparison-table">
+              <div class="comp-table-row">
+                <span style="color: var(--fg-muted);">Identity vs. Access</span>
+                <span style="color: var(--fg-primary); font-weight: 500;">Authentication and membership are separate states.</span>
+              </div>
+              <div class="comp-table-row">
+                <span style="color: var(--fg-muted);">Authority Boundaries</span>
+                <span style="color: var(--fg-primary); font-weight: 500;">Platform administration and school-level educator authority require different permissions.</span>
+              </div>
+              <div class="comp-table-row">
+                <span style="color: var(--fg-muted);">Context Switching</span>
+                <span style="color: var(--fg-primary); font-weight: 500;">Tenant switching changes permissions and available actions, not only navigation.</span>
+              </div>
+              <div class="comp-table-row">
+                <span style="color: var(--fg-muted);">Protected Media</span>
+                <span style="color: var(--fg-primary); font-weight: 500;">Private media needs an access lifecycle rather than simply a file URL.</span>
+              </div>
+              <div class="comp-table-row">
+                <span style="color: var(--fg-muted);">Deep Routing</span>
+                <span style="color: var(--fg-primary); font-weight: 500;">Direct links need to survive authentication.</span>
+              </div>
+              <div class="comp-table-row">
+                <span style="color: var(--fg-muted);">Synchronisation</span>
+                <span style="color: var(--fg-primary); font-weight: 500;">Loading and synchronisation can become security as well as UX states.</span>
+              </div>
+              <div class="comp-table-row">
+                <span style="color: var(--fg-muted);">Learning Memory</span>
+                <span style="color: var(--fg-primary); font-weight: 500;">Assignment and feedback history needs persistence rather than message-like ephemerality.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         09 / WHAT CHANGED IN MY DESIGN PRACTICE
+         ====================================================================== -->
+    <section id="practice-shift" class="section-block">
+      <div class="container">
+        <div class="section-meta">
+          <span class="num">09</span>
+          <span class="line" aria-hidden="true"></span>
+          <span>What Changed in My Design Practice</span>
+        </div>
+        <h2 class="section-title">
+          The boundary of what I can design <em>moved.</em>
+        </h2>
+        <p class="lead-prose">
+          The most important outcome of Education OS is not that I became a software engineer. Previously, much of my work ended at validated flows, interface systems, prototypes and developer handoff. With AI-assisted development I can carry product decisions further into implementation, test them against real application behaviour and use what happens in the working product as design evidence.
+        </p>
+
+        <div class="inquiry-grid">
+          <div class="inquiry-item">
+            <span class="col-kicker">01 · System State</span>
+            <p>“What state is the system in?”</p>
+          </div>
+          <div class="inquiry-item">
+            <span class="col-kicker">02 · Authority</span>
+            <p>“What does this user have permission to do?”</p>
+          </div>
+          <div class="inquiry-item">
+            <span class="col-kicker">03 · Resilience</span>
+            <p>“What happens when the expected path fails?”</p>
+          </div>
+          <div class="inquiry-item">
+            <span class="col-kicker">04 · Persistence</span>
+            <p>“What data persists?”</p>
+          </div>
+          <div class="inquiry-item">
+            <span class="col-kicker">05 · Multi-Tenancy</span>
+            <p>“What changes when the same person enters another tenant?”</p>
+          </div>
+          <div class="inquiry-item">
+            <span class="col-kicker">06 · Reality</span>
+            <p>“Can this product decision survive contact with the real application?”</p>
+          </div>
+        </div>
+
+        <div class="editorial-quote" style="border-left-color: var(--accent-emerald); margin-top: 3rem;">
+          <p>
+            “AI-assisted development did not replace product design. It expanded the surface area I am able to design.”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         10 / SYSTEM ARCHITECTURE (FULL SECTION AT BOTTOM, ALWAYS VISIBLE)
+         ====================================================================== -->
+    <section id="system-architecture" class="section-block" style="border-bottom: none;">
+      <div class="container">
+        <div class="section-meta">
+          <span class="num">10</span>
+          <span class="line" aria-hidden="true"></span>
+          <span>System Architecture &amp; Living Map · Continuously Updated</span>
+        </div>
+        <h2 class="section-title">
+          One platform. <em>Separate workspaces.</em>
+        </h2>
+        <p class="lead-prose">
+          Education OS is a live, continuously updated platform. As Melodina Hub and Mira Treino evolve with real coaches and learners, this system map documents how the product is organised, how access is granted, and how the application connects to its backend services.
+        </p>
+
+        <div class="arch-section-wrapper">
+          <div class="arch-intro-header">
+            <p class="body-prose" style="max-width: 60ch;">
+              Jump directly to any architectural layer below:
+            </p>
+            <nav class="arch-index-nav" aria-label="Diagram navigation">
+              <a href="#arch-structure"><span>01</span> Product structure</a>
+              <a href="#arch-access"><span>02</span> Access levels</a>
+              <a href="#arch-technical"><span>03</span> Technical architecture</a>
+            </nav>
+          </div>
+
+              <!-- 01 PRODUCT STRUCTURE -->
+              <div id="arch-structure" class="arch-sub-block">
+                <div class="arch-sub-head">
+                  <span class="arch-sub-num">01</span>
+                  <div>
+                    <h3>Product structure</h3>
+                    <p>A shared application, configured for each school or organisation.</p>
+                  </div>
+                </div>
+
+                <figure aria-label="Education OS product hierarchy">
+                  <div class="arch-node tone-platform arch-root arch-center">
+                    <span class="arch-tag">Shared platform</span>
+                    <h4>Education OS</h4>
+                    <p>Application code · core services · module system</p>
+                  </div>
+                  <div class="arch-stem" aria-hidden="true"></div>
+                  <div class="arch-branch arch-two">
+                    <div class="arch-node tone-platform">
+                      <span class="arch-tag">Platform scope</span>
+                      <h4>Platform administration</h4>
+                      <p>Tenant registry · provisioning · platform settings</p>
+                    </div>
+                    <div class="arch-node tone-tenant">
+                      <span class="arch-tag">Tenant scope</span>
+                      <h4>Tenant workspace</h4>
+                      <p>A school, organisation or community with its own configuration and scoped data</p>
+                    </div>
+                  </div>
+
+                  <div class="arch-workspace-zone">
+                    <p class="arch-workspace-label">Inside each tenant workspace</p>
+                    <div class="arch-config-row">
+                      <span><strong>Configuration</strong> · Branding, terminology, plan, enabled features</span>
+                      <span><strong>Subject modules</strong> · For example, Music Pack</span>
+                    </div>
+                    <div class="arch-grid arch-four">
+                      <div class="arch-node">
+                        <h5>My Corner</h5>
+                        <p>Training log<br />Personal uploads<br />Recorded sessions<br />Homework</p>
+                      </div>
+                      <div class="arch-node">
+                        <h5>Shared learning</h5>
+                        <p>Learning library<br />Live classroom<br />Community feed<br />Messaging</p>
+                      </div>
+                      <div class="arch-node">
+                        <h5>Coach Panel</h5>
+                        <p>Members<br />Assignments<br />Reviews and feedback<br />Attendance</p>
+                      </div>
+                      <div class="arch-node">
+                        <h5>Tenant governance</h5>
+                        <p>Configuration<br />Data exports<br />Ownership transfer</p>
+                      </div>
+                    </div>
+                  </div>
+                  <figcaption class="arch-figcaption">
+                    <strong>Same application, separate tenant context.</strong> Features vary by tenant. Being a tenant member does not make every resource in that tenant visible.
+                  </figcaption>
+                </figure>
+              </div>
+
+              <!-- 02 ACCESS LEVELS -->
+              <div id="arch-access" class="arch-sub-block">
+                <div class="arch-sub-head">
+                  <span class="arch-sub-num">02</span>
+                  <div>
+                    <h3>Access levels</h3>
+                    <p>Platform authority and tenant membership are separate.</p>
+                  </div>
+                </div>
+
+                <figure aria-label="Access flows for platform administrators and tenant members">
+                  <div class="arch-node arch-root arch-center">
+                    <h4>Signed-in user</h4>
+                    <p>Verified identity and session</p>
+                  </div>
+                  <div class="arch-stem" aria-hidden="true"></div>
+
+                  <div class="arch-flow-lanes">
+                    <div>
+                      <p class="arch-lane-title">Platform authority</p>
+                      <div class="arch-node tone-platform">
+                        <h4>Platform super admin</h4>
+                        <p>Role: platform_super_admin</p>
+                      </div>
+                      <div class="arch-stem" aria-hidden="true"></div>
+                      <div class="arch-node tone-platform">
+                        <h4>Platform administration</h4>
+                        <p>Tenant registry, provisioning and platform operations</p>
+                      </div>
+                      <p class="arch-access-note">
+                        Entering a tenant workspace still requires an active membership in that tenant. A platform role does not automatically grant a coach role.
+                      </p>
+                    </div>
+
+                    <div>
+                      <p class="arch-lane-title">Tenant authority</p>
+                      <div class="arch-node tone-tenant arch-center">
+                        <h4>Active membership in this tenant?</h4>
+                        <p>Resolved from tenant_memberships</p>
+                      </div>
+                      <p class="arch-connector-label">No → workspace access denied &nbsp; / &nbsp; Yes ↓ resolve tenant role</p>
+                      <div class="arch-grid arch-three" style="margin-bottom: 1rem;">
+                        <div class="arch-node tone-tenant">
+                          <h5>Tenant owner</h5>
+                          <p>Teaching + tenant governance</p>
+                        </div>
+                        <div class="arch-node tone-tenant">
+                          <h5>Educator / Coach</h5>
+                          <p>Teaching + member management</p>
+                        </div>
+                        <div class="arch-node tone-tenant">
+                          <h5>Learner</h5>
+                          <p>Learning + own work</p>
+                        </div>
+                      </div>
+                      <div class="arch-stem" aria-hidden="true"></div>
+                      <div class="arch-node arch-center">
+                        <h4>Action and resource checks</h4>
+                        <p>Feature enabled · action permitted · resource accessible</p>
+                      </div>
+                      <div class="arch-stem" aria-hidden="true"></div>
+                      <div class="arch-node tone-backend arch-center">
+                        <span class="arch-tag">Enforcement boundary</span>
+                        <h4>Backend authorization</h4>
+                        <p>Database policies · storage policies · server function checks</p>
+                      </div>
+                    </div>
+                  </div>
+                  <figcaption class="arch-figcaption">
+                    <strong>A role belongs to a tenant membership.</strong> One person can have different roles in different tenants. Coach, Tutor and Music Teacher are display labels for the canonical educator role.
+                  </figcaption>
+                </figure>
+
+                <div class="arch-table-wrap">
+                  <table class="arch-table">
+                    <caption>What each role can access</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Role</th>
+                        <th scope="col">Main access</th>
+                        <th scope="col">Boundary</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Platform super admin</th>
+                        <td>Platform registry and administration</td>
+                        <td>Tenant workspace entry still requires membership</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Tenant owner</th>
+                        <td>Educator functions, configuration, exports and ownership transfer</td>
+                        <td>Authority belongs to that tenant</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Educator / Coach</th>
+                        <td>Learning material, assignments, reviews, members and live classes</td>
+                        <td>No unrestricted access to private media</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Learner</th>
+                        <td>Assigned work, permitted resources, live classes, personal uploads and progress</td>
+                        <td>Other people's private content requires an applicable access rule</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- 03 TECHNICAL ARCHITECTURE -->
+              <div id="arch-technical" class="arch-sub-block">
+                <div class="arch-sub-head">
+                  <span class="arch-sub-num">03</span>
+                  <div>
+                    <h3>Technical architecture</h3>
+                    <p>Application composition and the main service connections.</p>
+                  </div>
+                </div>
+
+                <figure aria-label="Application layers and backend service connections">
+                  <p class="arch-lane-title">Application composition</p>
+                  <div class="arch-grid arch-three">
+                    <div class="arch-node">
+                      <h4>Core</h4>
+                      <p>Shared contracts and education features</p>
+                    </div>
+                    <div class="arch-node">
+                      <h4>Subject modules</h4>
+                      <p>Domain features, such as Music Pack</p>
+                    </div>
+                    <div class="arch-node">
+                      <h4>Tenant configuration</h4>
+                      <p>Branding, capabilities and terminology</p>
+                    </div>
+                  </div>
+
+                  <div class="arch-arrow-caption"><span aria-hidden="true">↓</span> Composed by</div>
+                  <div class="arch-node tone-tenant arch-center">
+                    <h4>Tenant runtime</h4>
+                    <p>Resolves configuration, modules and available capabilities for the active tenant</p>
+                  </div>
+
+                  <div class="arch-arrow-caption"><span aria-hidden="true">↓</span> Configures</div>
+                  <div class="arch-node tone-platform arch-center">
+                    <h4>Browser application</h4>
+                    <p>React · TypeScript · Vite · Tailwind CSS · shadcn/ui</p>
+                  </div>
+
+                  <div class="arch-arrow-caption"><span aria-hidden="true">↕</span> Authenticated requests and live updates</div>
+
+                  <p class="arch-lane-title">Supabase backend</p>
+                  <div class="arch-grid arch-three">
+                    <div class="arch-node tone-backend">
+                      <h4>Auth</h4>
+                      <p>Identity and sessions</p>
+                    </div>
+                    <div class="arch-node tone-backend">
+                      <h4>Data API + database functions</h4>
+                      <p>Scoped reads and writes to PostgreSQL</p>
+                    </div>
+                    <div class="arch-node tone-backend">
+                      <h4>Edge Functions</h4>
+                      <p>Privileged workflows and integrations</p>
+                    </div>
+                    <div class="arch-node tone-backend">
+                      <h4>Storage</h4>
+                      <p>Media files and access policies</p>
+                    </div>
+                    <div class="arch-node tone-backend">
+                      <h4>Realtime</h4>
+                      <p>Live data updates to clients</p>
+                    </div>
+                    <div class="arch-node tone-backend">
+                      <h4>PostgreSQL</h4>
+                      <p>Tenants, memberships and learning data · row-level security</p>
+                    </div>
+                  </div>
+
+                  <div class="arch-arrow-caption"><span aria-hidden="true">↕</span> Service integrations</div>
+                  <div class="arch-grid arch-three">
+                    <div class="arch-node">
+                      <h4>Daily</h4>
+                      <p>Edge Functions manage rooms and events. Browsers connect directly for live audio and video.</p>
+                    </div>
+                    <div class="arch-node">
+                      <h4>Stripe</h4>
+                      <p>Billing integration through server functions and verified webhooks.</p>
+                    </div>
+                    <div class="arch-node">
+                      <h4>Bunny</h4>
+                      <p>Video integration through server workflows; used alongside Supabase media storage.</p>
+                    </div>
+                  </div>
+
+                  <div class="arch-legend" aria-label="Diagram colour legend">
+                    <span><i class="arch-swatch" aria-hidden="true"></i>Application / platform</span>
+                    <span><i class="arch-swatch green" aria-hidden="true"></i>Tenant context</span>
+                    <span><i class="arch-swatch indigo" aria-hidden="true"></i>Backend services</span>
+                  </div>
+
+                  <figcaption class="arch-figcaption">
+                    <strong>Navigation controls what users see; backend authorization controls what they can access.</strong> Private uploads, assignment submissions and shared recordings have distinct access rules. Service boxes show logical responsibilities, not separate deployments.
+                  </figcaption>
+                </figure>
+
+                <div class="arch-source-footer">
+                  <p><strong>Source basis:</strong> Education OS source review, 22 October 2026. This map describes the reviewed implementation; it is not a live security audit or confirmation that every integration is enabled for every tenant.</p>
+                  <p style="margin-top: 0.35rem;">Older architecture notes describe a single-tenant restriction and omit tenant owners. This map follows the newer membership and workspace-entry code.</p>
+                </div>
+              </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="padding: 3rem 0 4rem; border-top: 1px solid var(--line-strong); color: var(--fg-muted); font-size: 0.85rem;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <span style="font-family: var(--font-display); font-weight: 700; color: var(--fg-primary); text-transform: uppercase; letter-spacing: 0.04em;">Education OS · Portfolio Case Study</span>
+      <span style="font-family: var(--font-mono); font-size: 0.75rem;">React · TypeScript · Supabase · Daily.co · Bunny · Lovable</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
