@@ -1847,3 +1847,242 @@ body.is-editing-text [contenteditable="true"]:focus {
   outline: 2px solid var(--accent-indigo);
   background-color: rgba(55, 48, 163, 0.05);
 }
+
+/* ==========================================================================
+   HAND-DRAWN EDITORIAL ANNOTATIONS (HERO SECTION TEST)
+   ========================================================================== */
+:root {
+  --font-hand: 'Caveat', cursive;
+  --ink-marker-red: #D92D4B;
+  --ink-marker-indigo: #3730A3;
+  --ink-marker-emerald: #0D746B;
+  --ink-marker-amber: #C26D0A;
+}
+
+.hero-annotated-col {
+  position: relative;
+}
+
+.hero-heading-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Keep "OS" inline and full-sized inside .display-hero */
+.display-hero .hand-inline-anchor {
+  position: relative;
+  display: inline-block;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin-top: 0;
+}
+
+.hand-svg {
+  pointer-events: none;
+  overflow: visible;
+  filter: url(#hand-ink-filter);
+}
+
+.hand-svg path {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: hand-draw-stroke 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes hand-draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 1. Double Pen Underline under "OS" in Heading */
+.hand-os-underline {
+  position: absolute;
+  left: -4%;
+  bottom: -10px;
+  width: 112%;
+  height: 22px;
+  color: var(--ink-marker-red);
+}
+
+/* 2. Handwritten Callout + Arrow pointing to Heading */
+.hand-hero-callout {
+  position: absolute;
+  top: -18px;
+  left: calc(100% + 18px);
+  width: 225px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.hand-script-note {
+  display: inline-block;
+  font-family: var(--font-hand);
+  font-size: 1.48rem;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--ink-marker-red);
+  transform: rotate(-5deg);
+  letter-spacing: 0.01em;
+}
+
+.hand-callout-arrow {
+  display: block;
+  width: 115px;
+  height: 62px;
+  margin-top: 2px;
+  margin-left: -10px;
+  color: var(--ink-marker-red);
+}
+
+.hand-callout-arrow path {
+  animation-delay: 0.25s;
+}
+
+/* 3. Crossed-out phrase ("generic LMS") + Handwritten Script Above ("education platform") */
+.hand-crossout-group {
+  position: relative;
+  display: inline-block;
+  margin: 0 0.2rem;
+  padding-top: 0.35rem;
+}
+
+.hand-crossed-text {
+  color: var(--fg-muted);
+  opacity: 0.68;
+}
+
+.hand-scribble-strike {
+  position: absolute;
+  left: -4%;
+  top: 52%;
+  width: 108%;
+  height: 24px;
+  transform: translateY(-42%) rotate(-2deg);
+  color: var(--ink-marker-red);
+}
+
+.hand-scribble-strike path {
+  animation-delay: 0.35s;
+}
+
+.hand-Replacement-script {
+  position: absolute;
+  left: 50%;
+  bottom: 86%;
+  transform: translateX(-48%) rotate(-4deg);
+  white-space: nowrap;
+  font-family: var(--font-hand);
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink-marker-red);
+  pointer-events: none;
+}
+
+/* 4. Wiggly Hand-Drawn Underline ("music schools.") */
+.hand-wiggle-word {
+  position: relative;
+  display: inline-block;
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+
+.hand-wiggle-underline {
+  position: absolute;
+  left: -2%;
+  bottom: -7px;
+  width: 104%;
+  height: 16px;
+  color: var(--ink-marker-emerald);
+}
+
+.hand-wiggle-underline path {
+  animation-delay: 0.5s;
+}
+
+.hand-wiggle-word.indigo {
+  font-weight: 500;
+}
+
+.hand-long-underline {
+  position: absolute;
+  left: -1%;
+  bottom: -6px;
+  width: 102%;
+  height: 14px;
+  color: var(--ink-marker-indigo);
+}
+
+.hand-long-underline path {
+  animation-delay: 0.75s;
+}
+
+/* 5. Hand-Drawn Loop Circle ("one protected environment") */
+.hand-circle-word {
+  position: relative;
+  display: inline-block;
+  padding: 0 0.25rem;
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+
+.hand-loop-circle {
+  position: absolute;
+  left: -5%;
+  top: -18%;
+  width: 110%;
+  height: 138%;
+  color: var(--ink-marker-amber);
+}
+
+.hand-loop-circle path {
+  animation-delay: 0.6s;
+}
+
+/* 6. Hand-Drawn Arrow + Script Note pointing to CTA Button */
+.hand-action-row {
+  position: relative;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.hand-btn-pointer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  pointer-events: none;
+  transform: translateY(-2px);
+}
+
+.hand-btn-arrow {
+  width: 78px;
+  height: 36px;
+  color: var(--ink-marker-indigo);
+  flex-shrink: 0;
+}
+
+.hand-btn-arrow path {
+  animation-delay: 0.85s;
+}
+
+.hand-btn-pointer .hand-script-note {
+  color: var(--ink-marker-indigo);
+  font-size: 1.42rem;
+  transform: rotate(-3deg);
+}
+
+@media (max-width: 1024px) {
+  .hand-hero-callout {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-top: 0.5rem;
+    width: auto;
+  }
+  .hand-callout-arrow {
+    display: none;
+  }
+}

@@ -8,29 +8,101 @@
   <meta name="description" content="From a personal learning problem to a live multi-tenant education platform. Product design and AI-assisted systems engineering case study." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- Decorative Visual Scroll Progress Bar (aria-hidden per modern-web-guidance) -->
   <div id="page-scroll-progress" aria-hidden="true"></div>
 
+  <!-- Shared SVG Ink Texture Filter for Hand-Drawn Annotations -->
+  <svg width="0" height="0" style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+    <defs>
+      <filter id="hand-ink-filter" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
   <main>
     <!-- ======================================================================
-         01 / OVERVIEW & HERO (GREEN 1 CENTERED ON HORIZONTAL AXIS WITH HERO)
+         01 / OVERVIEW & HERO (WITH HAND-DRAWN EDITORIAL ANNOTATIONS TEST)
          ====================================================================== -->
     <section id="overview" class="section-block">
       <div class="container">
         <div class="hero-layout">
-          <div>
-            <h1 class="display-hero">
-              Education OS
-            </h1>
-            <p class="lead-prose" style="margin-top: 1.5rem;">
-              Education OS is a live, multi-tenant education platform focused on music schools. It brings learning materials, assignments, feedback, and live teaching into one protected environment while allowing each institution to retain its own curriculum, workflows, branding, and permissions.
+          <div class="hero-annotated-col">
+            <div class="hero-heading-wrap">
+              <h1 class="display-hero">
+                Education
+                <span class="hand-inline-anchor">
+                  OS
+                  <!-- Hand-drawn double pen underline under "OS" -->
+                  <svg class="hand-svg hand-os-underline" viewBox="0 0 140 26" fill="none" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M4 13 C 38 6, 98 18, 136 9" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" />
+                    <path d="M12 21 C 52 16, 96 23, 130 17" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
+                  </svg>
+                </span>
+              </h1>
+
+              <!-- Hand-drawn note + swooping arrow pointing at the heading -->
+              <div class="hand-hero-callout" aria-hidden="true">
+                <span class="hand-script-note">not just a prototype, live in production!</span>
+                <svg class="hand-svg hand-callout-arrow" viewBox="0 0 130 74" fill="none">
+                  <path d="M118 14 C 86 2, 42 18, 11 55" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M26 52 L 9 57 L 13 38" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+
+            <p class="lead-prose" style="margin-top: 2rem;">
+              Education OS is a live, multi-tenant
+              <span class="hand-crossout-group">
+                <span class="hand-crossed-text">generic LMS</span>
+                <!-- Wiggly hand-drawn scribble crossing out "generic LMS" -->
+                <svg class="hand-svg hand-scribble-strike" viewBox="0 0 160 28" fill="none" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M3 16 Q 18 5, 34 18 T 66 13 T 98 18 T 130 12 T 157 16" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" />
+                  <path d="M6 19 C 54 12, 108 17, 154 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <span class="hand-Replacement-script" aria-hidden="true">education platform</span>
+              </span>
+              focused on
+              <span class="hand-wiggle-word">
+                music schools.
+                <!-- Hand-drawn wiggly underline -->
+                <svg class="hand-svg hand-wiggle-underline" viewBox="0 0 180 20" fill="none" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M2 11 Q 17 3, 32 12 T 62 11 T 92 12 T 122 10 T 152 12 T 178 9" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" />
+                </svg>
+              </span>
+              It brings learning materials, assignments, feedback, and live teaching into
+              <span class="hand-circle-word">
+                one protected environment
+                <!-- Hand-drawn imperfect loop circle around phrase -->
+                <svg class="hand-svg hand-loop-circle" viewBox="0 0 290 54" fill="none" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M18 11 C 85 -2, 235 0, 276 16 C 296 26, 282 46, 224 50 C 142 55, 32 51, 9 36 C -6 25, 12 8, 48 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+                </svg>
+              </span>
+              while allowing each institution to retain its own
+              <span class="hand-wiggle-word indigo">
+                curriculum, workflows, branding, and permissions.
+                <svg class="hand-svg hand-long-underline" viewBox="0 0 420 18" fill="none" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M3 12 C 110 4, 285 16, 417 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
+                </svg>
+              </span>
             </p>
-            <div class="action-row">
+
+            <div class="action-row hand-action-row">
               <a href="#platform-presentation" class="btn-minimal">Watch Platform Presentation ↓</a>
+
+              <!-- Hand-drawn arrow + script pointing directly to the CTA button -->
+              <div class="hand-btn-pointer" aria-hidden="true">
+                <svg class="hand-svg hand-btn-arrow" viewBox="0 0 96 44" fill="none">
+                  <path d="M90 10 C 64 36, 36 34, 7 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+                  <path d="M19 14 L 5 20 L 15 32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="hand-script-note">watch Matt &amp; Teici demo it</span>
+              </div>
             </div>
           </div>
 
