@@ -425,11 +425,13 @@ document.addEventListener('DOMContentLoaded', () => {
   /* --------------------------------------------------------------------------
      6. Inline Live Text Editor & Pin Commenting System
      -------------------------------------------------------------------------- */
-  const STORAGE_KEY = 'education_os_inline_edits_v2';
-  const COMMENTS_STORAGE_KEY = 'education_os_comments_v2';
+  const STORAGE_KEY = 'education_os_inline_edits_v3';
+  const COMMENTS_STORAGE_KEY = 'education_os_comments_v3';
   try {
     localStorage.removeItem('education_os_inline_edits_v1');
     localStorage.removeItem('education_os_comments_v1');
+    localStorage.removeItem('education_os_inline_edits_v2');
+    localStorage.removeItem('education_os_comments_v2');
   } catch {
     // Ignore storage access errors
   }
