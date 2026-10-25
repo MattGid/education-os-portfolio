@@ -442,6 +442,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const pinsLayer = document.getElementById('comment-pins-layer');
   const popover = document.getElementById('comment-popover');
   const popoverTargetLabel = document.getElementById('comment-popover-target');
+  const parentBtn = document.getElementById('comment-parent-btn');
+  const hierarchyBar = document.getElementById('comment-hierarchy-bar');
   const popoverCloseBtn = document.getElementById('comment-popover-close');
   const commentTextarea = document.getElementById('comment-textarea');
   const commentSaveBtn = document.getElementById('comment-save-btn');
@@ -480,34 +482,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'footer .container > span'
   ].join(', ');
 
-  const COMMENTABLE_SELECTOR = [
-    'main h1',
-    'main h2',
-    'main h3',
-    'main h4',
-    'main h5',
-    'main p',
-    'main li',
-    'main .spec-row',
-    'main .spec-ledger',
-    'main .video-stage-wrapper',
-    'main .overview-columns > div',
-    'main .ux-capability',
-    'main .ux-zone-column',
-    'main .ux-zone-item',
-    'main .two-col-editorial > div',
-    'main .contrast-group',
-    'main .timeline-stage',
-    'main .journey-panel',
-    'main .clean-step-row',
-    'main .comp-table-row',
-    'main .inquiry-item',
-    'main .arch-sub-block',
-    'main .arch-node',
-    'main .arch-table-wrap',
-    'main section'
-  ].join(', ');
-
   const editableNodes = Array.from(document.querySelectorAll(EDITABLE_SELECTOR));
   const originalHTMLMap = new Map();
 
@@ -517,11 +491,14 @@ document.addEventListener('DOMContentLoaded', () => {
     originalHTMLMap.set(editId, node.innerHTML);
   });
 
-  const commentableNodes = Array.from(document.querySelectorAll(COMMENTABLE_SELECTOR));
-  commentableNodes.forEach((node, idx) => {
-    if (!node.hasAttribute('data-comment-target-id')) {
-      node.setAttribute('data-comment-target-id', `target-${idx}`);
-    }
+  // Make EVERY SINGLE element & container inside <main> and <footer> selectable for comments
+  const NON_COMMENTABLE_TAGS = new Set(['BR', 'SOURCE', 'INPUT', 'SVG', 'PATH', 'SCRIPT', 'STYLE']);
+  const allCandidateNodes = Array.from(document.querySelectorAll('main, main *, footer, footer *'));
+  let targetIdx = 0;
+  allCandidateNodes.forEach((node) => {
+    if (NON_COMMENTABLE_TAGS.has(node.tagName)) return;
+    if (node.classList.contains('timeline-edge-blur') || node.classList.contains('line')) return;
+    node.setAttribute('data-comment-target-id', `target-${targetIdx++}`);
   });
 
   function loadSavedEdits() {
@@ -663,39 +640,106 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStatusLabel();
   }
 
-  function openCommentPopover(targetEl) {
+  function shortNodeName(el) {
+    if (!el) return '';
+    const tag = el.tagName.toLowerCase();
+    if (el.id) return `${tag}#${el.id}`;
+    const cls =
+      el.className && typeof el.className === 'string'
+        ? el.className
+            .trim()
+            .split(/\s+/)
+            .filter((c) => c !== 'comment-hover-target' && c !== 'comment-active-target')[0]
+        : '';
+    return cls ? `${tag}.${cls}` : tag;
+  }
+
+  function clearActiveTargetHighlight() {
+    document.querySelectorAll('.comment-active-target').forEach((el) => {
+      el.classList.remove('comment-active-target');
+    });
+  }
+
+  function openCommentPopover(targetEl, preservePositionAndDraft = false) {
     if (!popover || !targetEl) return;
     const targetId = targetEl.getAttribute('data-comment-target-id');
     if (!targetId) return;
+
+    const draftText = preservePositionAndDraft && commentTextarea ? commentTextarea.value : '';
+
+    clearActiveTargetHighlight();
+    targetEl.classList.add('comment-active-target');
 
     activeCommentTargetId = targetId;
     if (popoverTargetLabel) {
       popoverTargetLabel.textContent = describeElement(targetEl);
     }
 
+    // Build ancestor chain for easy container selection
+    if (hierarchyBar) {
+      hierarchyBar.innerHTML = '';
+      const chain = [];
+      let curr = targetEl;
+      while (curr && curr !== document.body && curr.hasAttribute('data-comment-target-id')) {
+        chain.unshift(curr);
+        if (curr.tagName === 'SECTION' || curr.tagName === 'MAIN' || curr.tagName === 'FOOTER') {
+          break;
+        }
+        curr = curr.parentElement ? curr.parentElement.closest('[data-comment-target-id]') : null;
+      }
+
+      chain.forEach((node) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'comment-crumb-btn' + (node === targetEl ? ' active' : '');
+        btn.textContent = shortNodeName(node);
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openCommentPopover(node, true);
+        });
+        hierarchyBar.appendChild(btn);
+      });
+    }
+
+    const parentCandidate = targetEl.parentElement
+      ? targetEl.parentElement.closest('[data-comment-target-id]')
+      : null;
+    if (parentBtn) {
+      parentBtn.disabled = !parentCandidate;
+      parentBtn.onclick = (e) => {
+        e.stopPropagation();
+        if (parentCandidate) {
+          openCommentPopover(parentCandidate, true);
+        }
+      };
+    }
+
     const existing = loadSavedComments().find((c) => c.targetId === targetId);
     if (commentTextarea) {
-      commentTextarea.value = existing ? existing.text : '';
+      commentTextarea.value = existing ? existing.text : draftText;
     }
     if (commentDeleteBtn) {
       commentDeleteBtn.hidden = !existing;
     }
 
+    const wasHidden = popover.hidden;
     popover.hidden = false;
 
-    const rect = targetEl.getBoundingClientRect();
-    const popWidth = 360;
-    const popHeight = 230;
-    const left = Math.min(
-      window.innerWidth - popWidth - 16,
-      Math.max(16, rect.left + Math.min(rect.width * 0.25, 120))
-    );
-    const top = Math.min(
-      window.innerHeight - popHeight - 80,
-      Math.max(16, rect.top + 28)
-    );
-    popover.style.left = `${left}px`;
-    popover.style.top = `${top}px`;
+    if (!preservePositionAndDraft || wasHidden) {
+      const rect = targetEl.getBoundingClientRect();
+      const popWidth = 360;
+      const popHeight = 260;
+      const left = Math.min(
+        window.innerWidth - popWidth - 16,
+        Math.max(16, rect.left + Math.min(rect.width * 0.25, 120))
+      );
+      const top = Math.min(
+        window.innerHeight - popHeight - 80,
+        Math.max(16, rect.top + 28)
+      );
+      popover.style.left = `${left}px`;
+      popover.style.top = `${top}px`;
+    }
 
     setTimeout(() => {
       if (commentTextarea) commentTextarea.focus();
@@ -704,6 +748,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeCommentPopover() {
     if (popover) popover.hidden = true;
+    clearActiveTargetHighlight();
     activeCommentTargetId = null;
   }
 

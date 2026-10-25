@@ -1076,8 +1076,12 @@
   <div id="comment-popover" class="comment-popover" role="dialog" aria-label="Element Comment" hidden>
     <div class="comment-popover-head">
       <span id="comment-popover-target" class="comment-target-label">Target Element</span>
-      <button type="button" id="comment-popover-close" class="comment-close-btn" aria-label="Close comment box">×</button>
+      <div class="comment-head-actions">
+        <button type="button" id="comment-parent-btn" class="comment-parent-btn" title="Select parent container">↑ Parent</button>
+        <button type="button" id="comment-popover-close" class="comment-close-btn" aria-label="Close comment box">×</button>
+      </div>
     </div>
+    <div id="comment-hierarchy-bar" class="comment-hierarchy-bar" aria-label="Container hierarchy selector"></div>
     <div class="comment-quick-tags">
       <button type="button" class="comment-chip" data-Insert-tag="[REMOVE] ">Remove</button>
       <button type="button" class="comment-chip" data-Insert-tag="[MOVE] ">Move</button>

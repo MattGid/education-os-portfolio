@@ -1602,14 +1602,23 @@ body.is-commenting .timeline-scroller {
   cursor: default;
 }
 
-body.is-commenting main * {
+body.is-commenting main,
+body.is-commenting main *,
+body.is-commenting footer,
+body.is-commenting footer * {
   cursor: crosshair !important;
 }
 
 .comment-hover-target {
   outline: 2px solid var(--accent-coral) !important;
-  outline-offset: 4px !important;
+  outline-offset: 3px !important;
   background-color: rgba(190, 52, 85, 0.04) !important;
+}
+
+.comment-active-target {
+  outline: 2.5px solid var(--accent-coral) !important;
+  outline-offset: 4px !important;
+  background-color: rgba(190, 52, 85, 0.06) !important;
 }
 
 [data-has-comment="true"] {
@@ -1674,9 +1683,70 @@ body.is-commenting main * {
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.45rem;
   padding-bottom: 0.45rem;
   border-bottom: 1px solid var(--line-light);
+}
+
+.comment-head-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.comment-parent-btn {
+  background: var(--bg-subtle);
+  border: 1px solid var(--fg-primary);
+  padding: 0.18rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--fg-primary);
+  cursor: pointer;
+}
+
+.comment-parent-btn:hover:not(:disabled) {
+  background: var(--fg-primary);
+  color: var(--bg-void);
+}
+
+.comment-parent-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.comment-hierarchy-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.55rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--line-light);
+}
+
+.comment-crumb-btn {
+  background: transparent;
+  border: 1px solid var(--line-light);
+  padding: 0.15rem 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.comment-crumb-btn:hover {
+  border-color: var(--fg-primary);
+  color: var(--fg-primary);
+}
+
+.comment-crumb-btn.active {
+  background: var(--accent-coral);
+  border-color: var(--accent-coral);
+  color: #FFFFFF;
+  font-weight: 600;
 }
 
 .comment-target-label {
