@@ -98,7 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let startScrollLeft = 0;
 
     scroller.addEventListener('mousedown', (e) => {
-      if (document.body.classList.contains('is-editing-text')) return;
+      if (
+        document.body.classList.contains('is-editing-text') ||
+        document.body.classList.contains('is-commenting')
+      ) {
+        return;
+      }
       isDown = true;
       startX = e.pageX - scroller.offsetLeft;
       startScrollLeft = scroller.scrollLeft;
@@ -418,16 +423,31 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSimulation();
 
   /* --------------------------------------------------------------------------
-     6. Inline Live Text Editor (Edit on Page -> Auto-Save -> Export / Copy Diff)
+     6. Inline Live Text Editor & Pin Commenting System
      -------------------------------------------------------------------------- */
   const STORAGE_KEY = 'education_os_inline_edits_v1';
+  const COMMENTS_STORAGE_KEY = 'education_os_comments_v1';
+
   const toggleBtn = document.getElementById('editor-toggle-btn');
   const toggleLabel = document.getElementById('editor-toggle-label');
+  const commentToggleBtn = document.getElementById('comment-toggle-btn');
+  const commentToggleLabel = document.getElementById('comment-toggle-label');
   const actionsPanel = document.getElementById('editor-actions-panel');
   const saveStatus = document.getElementById('editor-save-status');
   const copyBtn = document.getElementById('editor-copy-btn');
   const downloadBtn = document.getElementById('editor-download-btn');
   const resetBtn = document.getElementById('editor-reset-btn');
+
+  // Comment Popover DOM
+  const pinsLayer = document.getElementById('comment-pins-layer');
+  const popover = document.getElementById('comment-popover');
+  const popoverTargetLabel = document.getElementById('comment-popover-target');
+  const popoverCloseBtn = document.getElementById('comment-popover-close');
+  const commentTextarea = document.getElementById('comment-textarea');
+  const commentSaveBtn = document.getElementById('comment-save-btn');
+  const commentCancelBtn = document.getElementById('comment-cancel-btn');
+  const commentDeleteBtn = document.getElementById('comment-delete-btn');
+  const quickChips = document.querySelectorAll('.comment-chip');
 
   const EDITABLE_SELECTOR = [
     'main h1',
@@ -460,6 +480,34 @@ document.addEventListener('DOMContentLoaded', () => {
     'footer .container > span'
   ].join(', ');
 
+  const COMMENTABLE_SELECTOR = [
+    'main h1',
+    'main h2',
+    'main h3',
+    'main h4',
+    'main h5',
+    'main p',
+    'main li',
+    'main .spec-row',
+    'main .spec-ledger',
+    'main .video-stage-wrapper',
+    'main .overview-columns > div',
+    'main .ux-capability',
+    'main .ux-zone-column',
+    'main .ux-zone-item',
+    'main .two-col-editorial > div',
+    'main .contrast-group',
+    'main .timeline-stage',
+    'main .journey-panel',
+    'main .clean-step-row',
+    'main .comp-table-row',
+    'main .inquiry-item',
+    'main .arch-sub-block',
+    'main .arch-node',
+    'main .arch-table-wrap',
+    'main section'
+  ].join(', ');
+
   const editableNodes = Array.from(document.querySelectorAll(EDITABLE_SELECTOR));
   const originalHTMLMap = new Map();
 
@@ -467,6 +515,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const editId = `edit-node-${idx}`;
     node.setAttribute('data-edit-id', editId);
     originalHTMLMap.set(editId, node.innerHTML);
+  });
+
+  const commentableNodes = Array.from(document.querySelectorAll(COMMENTABLE_SELECTOR));
+  commentableNodes.forEach((node, idx) => {
+    if (!node.hasAttribute('data-comment-target-id')) {
+      node.setAttribute('data-comment-target-id', `target-${idx}`);
+    }
   });
 
   function loadSavedEdits() {
@@ -486,6 +541,72 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function loadSavedComments() {
+    try {
+      const raw = localStorage.getItem(COMMENTS_STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveCommentsList(list) {
+    try {
+      localStorage.setItem(COMMENTS_STORAGE_KEY, JSON.stringify(list));
+    } catch {
+      // Ignore storage quota errors
+    }
+  }
+
+  let isEditing = false;
+  let isCommenting = false;
+  let activeCommentTargetId = null;
+  let hoveredCommentEl = null;
+
+  function describeElement(el) {
+    if (!el) return 'Element';
+    const section = el.closest('section');
+    const secId = section && section.id ? `#${section.id}` : 'page';
+    const tag = el.tagName.toLowerCase();
+    const cls = el.className && typeof el.className === 'string'
+      ? '.' + el.className.trim().split(/\s+/).filter((c) => c !== 'comment-hover-target')[0]
+      : '';
+    const snippet = (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 42);
+    return `${secId} · <${tag}${cls === '.' ? '' : cls}> "${snippet}${snippet.length >= 42 ? '…' : ''}"`;
+  }
+
+  function updateStatusLabel(customMsg) {
+    if (!saveStatus) return;
+    const editCount = Object.keys(loadSavedEdits()).length;
+    const commentList = loadSavedComments();
+    const commentCount = commentList.length;
+
+    if (commentToggleLabel) {
+      commentToggleLabel.textContent =
+        commentCount > 0 ? `Comments (${commentCount})` : 'Comment Mode';
+    }
+
+    if (actionsPanel) {
+      actionsPanel.hidden = !isEditing && !isCommenting && editCount === 0 && commentCount === 0;
+    }
+
+    if (customMsg) {
+      saveStatus.textContent = customMsg;
+      return;
+    }
+
+    if (editCount > 0 || commentCount > 0) {
+      saveStatus.textContent = `${editCount} edit${editCount === 1 ? '' : 's'} · ${commentCount} comment${commentCount === 1 ? '' : 's'}`;
+    } else if (isCommenting) {
+      saveStatus.textContent = 'Click any element to add a note';
+    } else if (isEditing) {
+      saveStatus.textContent = 'Click any text to edit';
+    } else {
+      saveStatus.textContent = 'Ready';
+    }
+  }
+
   function applySavedEditsToDOM() {
     const saved = loadSavedEdits();
     let count = 0;
@@ -496,31 +617,104 @@ document.addEventListener('DOMContentLoaded', () => {
         count++;
       }
     });
-    updateStatusLabel(Object.keys(saved).length);
+    updateStatusLabel();
     return count;
   }
 
-  function updateStatusLabel(editCount, customMsg) {
-    if (!saveStatus) return;
-    if (customMsg) {
-      saveStatus.textContent = customMsg;
-      return;
-    }
-    saveStatus.textContent =
-      editCount > 0 ? `Auto-saved (${editCount} edited)` : 'Click any text to edit';
+  function renderCommentPins() {
+    if (!pinsLayer) return;
+    pinsLayer.innerHTML = '';
+
+    document.querySelectorAll('[data-has-comment]').forEach((el) => {
+      el.removeAttribute('data-has-comment');
+    });
+
+    const comments = loadSavedComments();
+    comments.forEach((item, index) => {
+      const el = document.querySelector(`[data-comment-target-id="${item.targetId}"]`);
+      if (!el) return;
+      el.setAttribute('data-has-comment', 'true');
+
+      const rect = el.getBoundingClientRect();
+      if (rect.width === 0 && rect.height === 0) return;
+
+      const pin = document.createElement('button');
+      pin.type = 'button';
+      pin.className = 'comment-pin-badge';
+      pin.textContent = String(index + 1);
+      pin.title = `#${index + 1}: ${item.text}`;
+
+      const topPx = rect.top + window.scrollY + 6;
+      const leftPx = Math.min(
+        window.innerWidth - 18,
+        Math.max(18, rect.right + window.scrollX - 6)
+      );
+      pin.style.top = `${topPx}px`;
+      pin.style.left = `${leftPx}px`;
+
+      pin.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openCommentPopover(el);
+      });
+
+      pinsLayer.appendChild(pin);
+    });
+
+    updateStatusLabel();
   }
 
-  let isEditing = false;
+  function openCommentPopover(targetEl) {
+    if (!popover || !targetEl) return;
+    const targetId = targetEl.getAttribute('data-comment-target-id');
+    if (!targetId) return;
+
+    activeCommentTargetId = targetId;
+    if (popoverTargetLabel) {
+      popoverTargetLabel.textContent = describeElement(targetEl);
+    }
+
+    const existing = loadSavedComments().find((c) => c.targetId === targetId);
+    if (commentTextarea) {
+      commentTextarea.value = existing ? existing.text : '';
+    }
+    if (commentDeleteBtn) {
+      commentDeleteBtn.hidden = !existing;
+    }
+
+    popover.hidden = false;
+
+    const rect = targetEl.getBoundingClientRect();
+    const popWidth = 360;
+    const popHeight = 230;
+    const left = Math.min(
+      window.innerWidth - popWidth - 16,
+      Math.max(16, rect.left + Math.min(rect.width * 0.25, 120))
+    );
+    const top = Math.min(
+      window.innerHeight - popHeight - 80,
+      Math.max(16, rect.top + 28)
+    );
+    popover.style.left = `${left}px`;
+    popover.style.top = `${top}px`;
+
+    setTimeout(() => {
+      if (commentTextarea) commentTextarea.focus();
+    }, 20);
+  }
+
+  function closeCommentPopover() {
+    if (popover) popover.hidden = true;
+    activeCommentTargetId = null;
+  }
 
   function setEditingMode(enabled) {
     isEditing = enabled;
+    if (isEditing && isCommenting) {
+      setCommentingMode(false);
+    }
     document.body.classList.toggle('is-editing-text', isEditing);
     if (toggleBtn) toggleBtn.classList.toggle('active', isEditing);
     if (toggleLabel) toggleLabel.textContent = isEditing ? 'Editing Active' : 'Edit Text';
-    if (actionsPanel) {
-      const savedCount = Object.keys(loadSavedEdits()).length;
-      actionsPanel.hidden = !isEditing && savedCount === 0;
-    }
 
     editableNodes.forEach((node) => {
       if (isEditing) {
@@ -532,10 +726,27 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    updateStatusLabel(Object.keys(loadSavedEdits()).length);
+    updateStatusLabel();
   }
 
-  // Record edits on input
+  function setCommentingMode(enabled) {
+    isCommenting = enabled;
+    if (isCommenting && isEditing) {
+      setEditingMode(false);
+    }
+    document.body.classList.toggle('is-commenting', isCommenting);
+    if (commentToggleBtn) commentToggleBtn.classList.toggle('active', isCommenting);
+    if (!isCommenting && hoveredCommentEl) {
+      hoveredCommentEl.classList.remove('comment-hover-target');
+      hoveredCommentEl = null;
+    }
+    if (!isCommenting) {
+      closeCommentPopover();
+    }
+    updateStatusLabel();
+  }
+
+  // Record text edits on input
   editableNodes.forEach((node) => {
     node.addEventListener('input', () => {
       const editId = node.getAttribute('data-edit-id');
@@ -548,58 +759,196 @@ document.addEventListener('DOMContentLoaded', () => {
         saved[editId] = node.innerHTML;
       }
       saveEditsMap(saved);
-      updateStatusLabel(Object.keys(saved).length);
+      updateStatusLabel();
+      renderCommentPins();
     });
   });
+
+  // Hover highlight and click-to-comment in Comment Mode
+  document.addEventListener('mousemove', (e) => {
+    if (!isCommenting) return;
+    if (
+      e.target.closest('#inline-editor-dock') ||
+      e.target.closest('#comment-popover') ||
+      e.target.closest('#comment-pins-layer')
+    ) {
+      if (hoveredCommentEl) {
+        hoveredCommentEl.classList.remove('comment-hover-target');
+        hoveredCommentEl = null;
+      }
+      return;
+    }
+
+    const candidate = e.target.closest('[data-comment-target-id]');
+    if (candidate !== hoveredCommentEl) {
+      if (hoveredCommentEl) hoveredCommentEl.classList.remove('comment-hover-target');
+      hoveredCommentEl = candidate;
+      if (hoveredCommentEl) hoveredCommentEl.classList.add('comment-hover-target');
+    }
+  });
+
+  document.addEventListener(
+    'click',
+    (e) => {
+      if (!isCommenting) return;
+      if (
+        e.target.closest('#inline-editor-dock') ||
+        e.target.closest('#comment-popover') ||
+        e.target.closest('#comment-pins-layer')
+      ) {
+        return;
+      }
+      const candidate = e.target.closest('[data-comment-target-id]');
+      if (candidate) {
+        e.preventDefault();
+        e.stopPropagation();
+        openCommentPopover(candidate);
+      }
+    },
+    true
+  );
+
+  // Quick-insert chips inside popover
+  quickChips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const tag = chip.getAttribute('data-Insert-tag') || '';
+      if (!commentTextarea) return;
+      if (!commentTextarea.value.startsWith(tag)) {
+        commentTextarea.value = tag + commentTextarea.value;
+      }
+      commentTextarea.focus();
+    });
+  });
+
+  function saveActiveComment() {
+    if (!activeCommentTargetId || !commentTextarea) return;
+    const text = commentTextarea.value.trim();
+    const list = loadSavedComments();
+    const idx = list.findIndex((c) => c.targetId === activeCommentTargetId);
+
+    if (!text) {
+      if (idx !== -1) list.splice(idx, 1);
+    } else {
+      const el = document.querySelector(`[data-comment-target-id="${activeCommentTargetId}"]`);
+      const entry = {
+        targetId: activeCommentTargetId,
+        label: describeElement(el),
+        text
+      };
+      if (idx !== -1) {
+        list[idx] = entry;
+      } else {
+        list.push(entry);
+      }
+    }
+
+    saveCommentsList(list);
+    closeCommentPopover();
+    renderCommentPins();
+  }
+
+  if (commentSaveBtn) {
+    commentSaveBtn.addEventListener('click', saveActiveComment);
+  }
+  if (commentCancelBtn) {
+    commentCancelBtn.addEventListener('click', closeCommentPopover);
+  }
+  if (popoverCloseBtn) {
+    popoverCloseBtn.addEventListener('click', closeCommentPopover);
+  }
+  if (commentDeleteBtn) {
+    commentDeleteBtn.addEventListener('click', () => {
+      if (!activeCommentTargetId) return;
+      const list = loadSavedComments().filter((c) => c.targetId !== activeCommentTargetId);
+      saveCommentsList(list);
+      closeCommentPopover();
+      renderCommentPins();
+    });
+  }
+
+  if (commentTextarea) {
+    commentTextarea.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        saveActiveComment();
+      } else if (e.key === 'Escape') {
+        closeCommentPopover();
+      }
+    });
+  }
+
+  // Keep pins anchored on scroll / resize / timeline scroll
+  window.addEventListener('resize', renderCommentPins, { passive: true });
+  window.addEventListener('scroll', renderCommentPins, { passive: true });
+  if (scroller) {
+    scroller.addEventListener('scroll', renderCommentPins, { passive: true });
+  }
 
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => setEditingMode(!isEditing));
   }
+  if (commentToggleBtn) {
+    commentToggleBtn.addEventListener('click', () => setCommentingMode(!isCommenting));
+  }
 
-  // Keyboard shortcut: Cmd/Ctrl + E toggles inline editing
+  // Keyboard shortcuts: Cmd/Ctrl + E (Edit Text), Cmd/Ctrl + M (Comment Mode)
   window.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'e') {
       e.preventDefault();
       setEditingMode(!isEditing);
+    } else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'm') {
+      e.preventDefault();
+      setCommentingMode(!isCommenting);
     }
   });
 
-  // Copy Edits for AI (structured Markdown summary of changed text so AI can rebuild layout)
+  // Copy All Edits & Comments for AI
   if (copyBtn) {
     copyBtn.addEventListener('click', async () => {
-      const saved = loadSavedEdits();
-      const entries = Object.entries(saved);
-      let payload = '';
+      const savedEdits = loadSavedEdits();
+      const editEntries = Object.entries(savedEdits);
+      const savedComments = loadSavedComments();
+      const lines = [];
 
-      if (entries.length === 0) {
-        payload = 'No text changes recorded yet. Toggle "Edit Text" and click any text on the page to edit.';
+      if (editEntries.length === 0 && savedComments.length === 0) {
+        lines.push('No text edits or comments recorded yet.');
       } else {
-        const lines = [
-          '# Updated Portfolio Text Edits (Please adjust/rebuild the layout to fit these changes):',
-          ''
-        ];
-        entries.forEach(([editId, newHTML]) => {
-          const el = document.querySelector(`[data-edit-id="${editId}"]`);
-          const section = el ? el.closest('section') : null;
-          const sectionId = section ? `#${section.id}` : 'page';
-          const tag = el ? el.tagName.toLowerCase() : 'element';
-          const tempOrig = document.createElement('div');
-          tempOrig.innerHTML = originalHTMLMap.get(editId) || '';
-          const beforeText = tempOrig.textContent.trim().replace(/\s+/g, ' ');
-          const afterText = el ? el.textContent.trim().replace(/\s+/g, ' ') : newHTML;
-          lines.push(`- **[${sectionId} · <${tag}>]**`);
-          lines.push(`  - Before: "${beforeText}"`);
-          lines.push(`  - After:  "${afterText}"`);
-        });
-        payload = lines.join('\n');
+        lines.push('# Portfolio Feedback: Pinned Comments & Text Edits');
+        lines.push('');
+
+        if (savedComments.length > 0) {
+          lines.push('## 1. Pinned Comments (Removals & Layout Changes)');
+          savedComments.forEach((item, i) => {
+            lines.push(`${i + 1}. **Target:** \`${item.label}\``);
+            lines.push(`   - **Instruction:** ${item.text}`);
+          });
+          lines.push('');
+        }
+
+        if (editEntries.length > 0) {
+          lines.push('## 2. Inline Text Edits');
+          editEntries.forEach(([editId, newHTML]) => {
+            const el = document.querySelector(`[data-edit-id="${editId}"]`);
+            const section = el ? el.closest('section') : null;
+            const sectionId = section ? `#${section.id}` : 'page';
+            const tag = el ? el.tagName.toLowerCase() : 'element';
+            const tempOrig = document.createElement('div');
+            tempOrig.innerHTML = originalHTMLMap.get(editId) || '';
+            const beforeText = tempOrig.textContent.trim().replace(/\s+/g, ' ');
+            const afterText = el ? el.textContent.trim().replace(/\s+/g, ' ') : newHTML;
+            lines.push(`- **[${sectionId} · <${tag}>]**`);
+            lines.push(`  - Before: "${beforeText}"`);
+            lines.push(`  - After:  "${afterText}"`);
+          });
+        }
       }
 
       try {
-        await navigator.clipboard.writeText(payload);
-        updateStatusLabel(entries.length, 'Copied edits to clipboard!');
-        setTimeout(() => updateStatusLabel(Object.keys(loadSavedEdits()).length), 2500);
+        await navigator.clipboard.writeText(lines.join('\n'));
+        updateStatusLabel('Copied all edits & comments!');
+        setTimeout(() => updateStatusLabel(), 2500);
       } catch {
-        updateStatusLabel(entries.length, 'Clipboard permission needed');
+        updateStatusLabel('Clipboard permission needed');
       }
     });
   }
@@ -609,18 +958,32 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadBtn.addEventListener('click', () => {
       const clone = document.documentElement.cloneNode(true);
       const cloneBody = clone.querySelector('body');
-      if (cloneBody) cloneBody.classList.remove('is-editing-text');
+      if (cloneBody) {
+        cloneBody.classList.remove('is-editing-text', 'is-commenting');
+      }
 
-      clone.querySelectorAll('[contenteditable], [spellcheck], [data-edit-id]').forEach((el) => {
-        el.removeAttribute('contenteditable');
-        el.removeAttribute('spellcheck');
-        el.removeAttribute('data-edit-id');
-      });
+      clone
+        .querySelectorAll(
+          '[contenteditable], [spellcheck], [data-edit-id], [data-comment-target-id], [data-has-comment], .comment-hover-target'
+        )
+        .forEach((el) => {
+          el.removeAttribute('contenteditable');
+          el.removeAttribute('spellcheck');
+          el.removeAttribute('data-edit-id');
+          el.removeAttribute('data-comment-target-id');
+          el.removeAttribute('data-has-comment');
+          el.classList.remove('comment-hover-target');
+        });
+
+      const clonePins = clone.querySelector('#comment-pins-layer');
+      if (clonePins) clonePins.innerHTML = '';
+      const clonePop = clone.querySelector('#comment-popover');
+      if (clonePop) clonePop.setAttribute('hidden', '');
 
       const cloneToggle = clone.querySelector('#editor-toggle-btn');
       if (cloneToggle) cloneToggle.classList.remove('active');
-      const cloneLabel = clone.querySelector('#editor-toggle-label');
-      if (cloneLabel) cloneLabel.textContent = 'Edit Text';
+      const cloneCommentToggle = clone.querySelector('#comment-toggle-btn');
+      if (cloneCommentToggle) cloneCommentToggle.classList.remove('active');
       const clonePanel = clone.querySelector('#editor-actions-panel');
       if (clonePanel) clonePanel.setAttribute('hidden', '');
 
@@ -634,35 +997,39 @@ document.addEventListener('DOMContentLoaded', () => {
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-      updateStatusLabel(Object.keys(loadSavedEdits()).length, 'Downloaded index.html!');
-      setTimeout(() => updateStatusLabel(Object.keys(loadSavedEdits()).length), 2500);
+      updateStatusLabel('Downloaded index.html!');
+      setTimeout(() => updateStatusLabel(), 2500);
     });
   }
 
-  // Reset local edits back to original text
+  // Reset local edits and comments back to original state
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
-      if (!window.confirm('Discard all local text edits and restore the original page text?')) {
+      if (!window.confirm('Discard all local text edits and pinned comments?')) {
         return;
       }
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(COMMENTS_STORAGE_KEY);
       editableNodes.forEach((node) => {
         const editId = node.getAttribute('data-edit-id');
         if (editId && originalHTMLMap.has(editId)) {
           node.innerHTML = originalHTMLMap.get(editId);
         }
       });
-      updateStatusLabel(0, 'Restored original text');
-      if (!isEditing && actionsPanel) actionsPanel.hidden = true;
+      closeCommentPopover();
+      renderCommentPins();
+      updateStatusLabel('Cleared edits & comments');
     });
   }
 
-  // Restore any saved edits on startup, and auto-open if ?edit=1 is in the URL
-  const restoredCount = applySavedEditsToDOM();
-  if (restoredCount > 0 && actionsPanel) {
-    actionsPanel.hidden = false;
-  }
-  if (new URLSearchParams(window.location.search).get('edit') === '1') {
+  // Restore saved edits & comments on startup
+  applySavedEditsToDOM();
+  renderCommentPins();
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('edit') === '1') {
     setEditingMode(true);
+  } else if (params.get('comment') === '1') {
+    setCommentingMode(true);
   }
 });

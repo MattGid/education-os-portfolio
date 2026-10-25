@@ -1557,6 +1557,32 @@ body {
   background: #10B981;
 }
 
+.comment-toggle.active {
+  background: var(--accent-coral);
+  border-color: var(--accent-coral);
+  color: var(--bg-void);
+}
+
+.comment-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-coral);
+}
+
+.comment-toggle.active .comment-dot {
+  background: var(--bg-void);
+}
+
+.editor-btn.editor-primary {
+  background: var(--fg-primary);
+  color: var(--bg-void);
+}
+
+.editor-btn.editor-primary:hover {
+  opacity: 0.86;
+}
+
 .editor-btn.editor-danger {
   border-color: var(--accent-coral);
   color: var(--accent-coral);
@@ -1571,8 +1597,168 @@ body.is-editing-text .timeline-stage {
   user-select: text;
 }
 
-body.is-editing-text .timeline-scroller {
+body.is-editing-text .timeline-scroller,
+body.is-commenting .timeline-scroller {
   cursor: default;
+}
+
+body.is-commenting main * {
+  cursor: crosshair !important;
+}
+
+.comment-hover-target {
+  outline: 2px solid var(--accent-coral) !important;
+  outline-offset: 4px !important;
+  background-color: rgba(190, 52, 85, 0.04) !important;
+}
+
+[data-has-comment="true"] {
+  outline: 1.5px dashed rgba(190, 52, 85, 0.55);
+  outline-offset: 3px;
+}
+
+/* Numbered Pins Layer */
+.comment-pins-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+  z-index: 9990;
+}
+
+.comment-pin-badge {
+  position: absolute;
+  pointer-events: auto;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  background: var(--accent-coral);
+  color: #FFFFFF;
+  border: 1.5px solid #FFFFFF;
+  box-shadow: 0 3px 10px rgba(10, 10, 10, 0.22);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.comment-pin-badge:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+  background: var(--fg-primary);
+}
+
+/* Floating Comment Popover */
+.comment-popover {
+  position: fixed;
+  z-index: 9998;
+  width: min(360px, calc(100vw - 2rem));
+  background: var(--bg-void);
+  border: 1.5px solid var(--fg-primary);
+  box-shadow: 0 16px 40px rgba(10, 10, 10, 0.18);
+  padding: 0.9rem;
+}
+
+.comment-popover[hidden] {
+  display: none !important;
+}
+
+.comment-popover-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--line-light);
+}
+
+.comment-target-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent-coral);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.comment-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--fg-muted);
+  cursor: pointer;
+  padding: 0 0.2rem;
+}
+
+.comment-close-btn:hover {
+  color: var(--fg-primary);
+}
+
+.comment-quick-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.55rem;
+}
+
+.comment-chip {
+  background: var(--bg-subtle);
+  border: 1px solid var(--line-strong);
+  padding: 0.2rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--fg-secondary);
+  cursor: pointer;
+}
+
+.comment-chip:hover {
+  background: var(--fg-primary);
+  color: var(--bg-void);
+  border-color: var(--fg-primary);
+}
+
+.comment-textarea {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  padding: 0.55rem 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--fg-primary);
+  background: var(--bg-void);
+  resize: vertical;
+  margin-bottom: 0.65rem;
+}
+
+.comment-textarea:focus {
+  outline: 1.5px solid var(--accent-coral);
+  border-color: var(--accent-coral);
+}
+
+.comment-popover-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.comment-foot-right {
+  display: flex;
+  gap: 0.4rem;
+  margin-left: auto;
 }
 
 body.is-editing-text [contenteditable="true"] {

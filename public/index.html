@@ -1070,22 +1070,56 @@
     </div>
   </footer>
 
-  <!-- Floating Inline Text Editor Toolbar -->
-  <aside id="inline-editor-dock" class="editor-dock" aria-label="Inline Text Editor Controls">
+  <!-- Comment Pins Layer & Floating Popover -->
+  <div id="comment-pins-layer" class="comment-pins-layer" aria-live="polite"></div>
+
+  <div id="comment-popover" class="comment-popover" role="dialog" aria-label="Element Comment" hidden>
+    <div class="comment-popover-head">
+      <span id="comment-popover-target" class="comment-target-label">Target Element</span>
+      <button type="button" id="comment-popover-close" class="comment-close-btn" aria-label="Close comment box">×</button>
+    </div>
+    <div class="comment-quick-tags">
+      <button type="button" class="comment-chip" data-Insert-tag="[REMOVE] ">Remove</button>
+      <button type="button" class="comment-chip" data-Insert-tag="[MOVE] ">Move</button>
+      <button type="button" class="comment-chip" data-Insert-tag="[SIMPLIFY] ">Simplify</button>
+      <button type="button" class="comment-chip" data-Insert-tag="[LAYOUT] ">Layout</button>
+    </div>
+    <textarea
+      id="comment-textarea"
+      class="comment-textarea"
+      rows="3"
+      placeholder="e.g. Remove this section, or move it under the video..."
+    ></textarea>
+    <div class="comment-popover-foot">
+      <button type="button" id="comment-delete-btn" class="editor-btn editor-danger" hidden>Delete</button>
+      <div class="comment-foot-right">
+        <button type="button" id="comment-cancel-btn" class="editor-btn">Cancel</button>
+        <button type="button" id="comment-save-btn" class="editor-btn editor-primary">Save Note</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Inline Text Editor & Comment Toolbar -->
+  <aside id="inline-editor-dock" class="editor-dock" aria-label="Inline Text Editor and Comment Controls">
     <button type="button" id="editor-toggle-btn" class="editor-btn editor-toggle" title="Toggle inline text editing (Cmd/Ctrl + E)">
       <span class="editor-dot" aria-hidden="true"></span>
       <span id="editor-toggle-label">Edit Text</span>
     </button>
 
+    <button type="button" id="comment-toggle-btn" class="editor-btn comment-toggle" title="Toggle pin commenting on any element (Cmd/Ctrl + M)">
+      <span class="comment-dot" aria-hidden="true"></span>
+      <span id="comment-toggle-label">Comment Mode</span>
+    </button>
+
     <div id="editor-actions-panel" class="editor-actions" hidden>
-      <span id="editor-save-status" class="editor-status">Click any text to edit</span>
-      <button type="button" id="editor-copy-btn" class="editor-btn" title="Copy your edited text changes so AI can rebuild the layout">
-        Copy Edits for AI
+      <span id="editor-save-status" class="editor-status">Ready</span>
+      <button type="button" id="editor-copy-btn" class="editor-btn editor-primary" title="Copy all text edits and pinned comments so AI can update the page">
+        Copy All for AI
       </button>
       <button type="button" id="editor-download-btn" class="editor-btn" title="Download the full updated index.html file">
         Download HTML
       </button>
-      <button type="button" id="editor-reset-btn" class="editor-btn editor-danger" title="Discard local edits and restore original text">
+      <button type="button" id="editor-reset-btn" class="editor-btn editor-danger" title="Discard local edits and comments">
         Reset
       </button>
     </div>
