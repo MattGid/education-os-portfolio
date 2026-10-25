@@ -1070,6 +1070,27 @@
     </div>
   </footer>
 
+  <!-- Floating Inline Text Editor Toolbar -->
+  <aside id="inline-editor-dock" class="editor-dock" aria-label="Inline Text Editor Controls">
+    <button type="button" id="editor-toggle-btn" class="editor-btn editor-toggle" title="Toggle inline text editing (Cmd/Ctrl + E)">
+      <span class="editor-dot" aria-hidden="true"></span>
+      <span id="editor-toggle-label">Edit Text</span>
+    </button>
+
+    <div id="editor-actions-panel" class="editor-actions" hidden>
+      <span id="editor-save-status" class="editor-status">Click any text to edit</span>
+      <button type="button" id="editor-copy-btn" class="editor-btn" title="Copy your edited text changes so AI can rebuild the layout">
+        Copy Edits for AI
+      </button>
+      <button type="button" id="editor-download-btn" class="editor-btn" title="Download the full updated index.html file">
+        Download HTML
+      </button>
+      <button type="button" id="editor-reset-btn" class="editor-btn editor-danger" title="Discard local edits and restore original text">
+        Reset
+      </button>
+    </div>
+  </aside>
+
   <script src="app.js"></script>
 </body>
 </html>

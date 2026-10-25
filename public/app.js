@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let startScrollLeft = 0;
 
     scroller.addEventListener('mousedown', (e) => {
+      if (document.body.classList.contains('is-editing-text')) return;
       isDown = true;
       startX = e.pageX - scroller.offsetLeft;
       startScrollLeft = scroller.scrollLeft;
@@ -123,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Keyboard Left / Right arrow support when focused
     scroller.addEventListener('keydown', (e) => {
+      if (document.body.classList.contains('is-editing-text')) return;
       if (e.key === 'ArrowRight') {
         e.preventDefault();
         scrollToStage(Math.min(stages.length - 1, activeStageIdx + 1));
@@ -414,4 +416,253 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   renderSimulation();
+
+  /* --------------------------------------------------------------------------
+     6. Inline Live Text Editor (Edit on Page -> Auto-Save -> Export / Copy Diff)
+     -------------------------------------------------------------------------- */
+  const STORAGE_KEY = 'education_os_inline_edits_v1';
+  const toggleBtn = document.getElementById('editor-toggle-btn');
+  const toggleLabel = document.getElementById('editor-toggle-label');
+  const actionsPanel = document.getElementById('editor-actions-panel');
+  const saveStatus = document.getElementById('editor-save-status');
+  const copyBtn = document.getElementById('editor-copy-btn');
+  const downloadBtn = document.getElementById('editor-download-btn');
+  const resetBtn = document.getElementById('editor-reset-btn');
+
+  const EDITABLE_SELECTOR = [
+    'main h1',
+    'main h2',
+    'main h3',
+    'main h4',
+    'main h5',
+    'main p',
+    'main li',
+    'main td',
+    'main th',
+    'main caption',
+    'main figcaption',
+    'main .section-meta > span:not(.line)',
+    'main .spec-label',
+    'main .spec-value',
+    'main .col-kicker',
+    'main .ux-cap-index',
+    'main .ux-zone-kicker',
+    'main .ux-zone-code',
+    'main .stage-month-badge',
+    'main .stage-date',
+    'main .stage-tab',
+    'main .minimal-tab-btn',
+    'main .clean-step-row > span',
+    'main .comp-table-row > span',
+    'main .contrast-header > span',
+    'main .tag-minimal',
+    'main .arch-tag',
+    'footer .container > span'
+  ].join(', ');
+
+  const editableNodes = Array.from(document.querySelectorAll(EDITABLE_SELECTOR));
+  const originalHTMLMap = new Map();
+
+  editableNodes.forEach((node, idx) => {
+    const editId = `edit-node-${idx}`;
+    node.setAttribute('data-edit-id', editId);
+    originalHTMLMap.set(editId, node.innerHTML);
+  });
+
+  function loadSavedEdits() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function saveEditsMap(mapObj) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mapObj));
+    } catch {
+      // Ignore storage quota errors
+    }
+  }
+
+  function applySavedEditsToDOM() {
+    const saved = loadSavedEdits();
+    let count = 0;
+    Object.entries(saved).forEach(([editId, html]) => {
+      const el = document.querySelector(`[data-edit-id="${editId}"]`);
+      if (el && typeof html === 'string' && el.innerHTML !== html) {
+        el.innerHTML = html;
+        count++;
+      }
+    });
+    updateStatusLabel(Object.keys(saved).length);
+    return count;
+  }
+
+  function updateStatusLabel(editCount, customMsg) {
+    if (!saveStatus) return;
+    if (customMsg) {
+      saveStatus.textContent = customMsg;
+      return;
+    }
+    saveStatus.textContent =
+      editCount > 0 ? `Auto-saved (${editCount} edited)` : 'Click any text to edit';
+  }
+
+  let isEditing = false;
+
+  function setEditingMode(enabled) {
+    isEditing = enabled;
+    document.body.classList.toggle('is-editing-text', isEditing);
+    if (toggleBtn) toggleBtn.classList.toggle('active', isEditing);
+    if (toggleLabel) toggleLabel.textContent = isEditing ? 'Editing Active' : 'Edit Text';
+    if (actionsPanel) {
+      const savedCount = Object.keys(loadSavedEdits()).length;
+      actionsPanel.hidden = !isEditing && savedCount === 0;
+    }
+
+    editableNodes.forEach((node) => {
+      if (isEditing) {
+        node.setAttribute('contenteditable', 'true');
+        node.setAttribute('spellcheck', 'true');
+      } else {
+        node.removeAttribute('contenteditable');
+        node.removeAttribute('spellcheck');
+      }
+    });
+
+    updateStatusLabel(Object.keys(loadSavedEdits()).length);
+  }
+
+  // Record edits on input
+  editableNodes.forEach((node) => {
+    node.addEventListener('input', () => {
+      const editId = node.getAttribute('data-edit-id');
+      if (!editId) return;
+      const saved = loadSavedEdits();
+      const orig = originalHTMLMap.get(editId);
+      if (node.innerHTML === orig) {
+        delete saved[editId];
+      } else {
+        saved[editId] = node.innerHTML;
+      }
+      saveEditsMap(saved);
+      updateStatusLabel(Object.keys(saved).length);
+    });
+  });
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => setEditingMode(!isEditing));
+  }
+
+  // Keyboard shortcut: Cmd/Ctrl + E toggles inline editing
+  window.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'e') {
+      e.preventDefault();
+      setEditingMode(!isEditing);
+    }
+  });
+
+  // Copy Edits for AI (structured Markdown summary of changed text so AI can rebuild layout)
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const saved = loadSavedEdits();
+      const entries = Object.entries(saved);
+      let payload = '';
+
+      if (entries.length === 0) {
+        payload = 'No text changes recorded yet. Toggle "Edit Text" and click any text on the page to edit.';
+      } else {
+        const lines = [
+          '# Updated Portfolio Text Edits (Please adjust/rebuild the layout to fit these changes):',
+          ''
+        ];
+        entries.forEach(([editId, newHTML]) => {
+          const el = document.querySelector(`[data-edit-id="${editId}"]`);
+          const section = el ? el.closest('section') : null;
+          const sectionId = section ? `#${section.id}` : 'page';
+          const tag = el ? el.tagName.toLowerCase() : 'element';
+          const tempOrig = document.createElement('div');
+          tempOrig.innerHTML = originalHTMLMap.get(editId) || '';
+          const beforeText = tempOrig.textContent.trim().replace(/\s+/g, ' ');
+          const afterText = el ? el.textContent.trim().replace(/\s+/g, ' ') : newHTML;
+          lines.push(`- **[${sectionId} · <${tag}>]**`);
+          lines.push(`  - Before: "${beforeText}"`);
+          lines.push(`  - After:  "${afterText}"`);
+        });
+        payload = lines.join('\n');
+      }
+
+      try {
+        await navigator.clipboard.writeText(payload);
+        updateStatusLabel(entries.length, 'Copied edits to clipboard!');
+        setTimeout(() => updateStatusLabel(Object.keys(loadSavedEdits()).length), 2500);
+      } catch {
+        updateStatusLabel(entries.length, 'Clipboard permission needed');
+      }
+    });
+  }
+
+  // Download full clean index.html with all edits baked in
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', () => {
+      const clone = document.documentElement.cloneNode(true);
+      const cloneBody = clone.querySelector('body');
+      if (cloneBody) cloneBody.classList.remove('is-editing-text');
+
+      clone.querySelectorAll('[contenteditable], [spellcheck], [data-edit-id]').forEach((el) => {
+        el.removeAttribute('contenteditable');
+        el.removeAttribute('spellcheck');
+        el.removeAttribute('data-edit-id');
+      });
+
+      const cloneToggle = clone.querySelector('#editor-toggle-btn');
+      if (cloneToggle) cloneToggle.classList.remove('active');
+      const cloneLabel = clone.querySelector('#editor-toggle-label');
+      if (cloneLabel) cloneLabel.textContent = 'Edit Text';
+      const clonePanel = clone.querySelector('#editor-actions-panel');
+      if (clonePanel) clonePanel.setAttribute('hidden', '');
+
+      const htmlString = '<!DOCTYPE html>\n' + clone.outerHTML;
+      const blob = new Blob([htmlString], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      updateStatusLabel(Object.keys(loadSavedEdits()).length, 'Downloaded index.html!');
+      setTimeout(() => updateStatusLabel(Object.keys(loadSavedEdits()).length), 2500);
+    });
+  }
+
+  // Reset local edits back to original text
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      if (!window.confirm('Discard all local text edits and restore the original page text?')) {
+        return;
+      }
+      localStorage.removeItem(STORAGE_KEY);
+      editableNodes.forEach((node) => {
+        const editId = node.getAttribute('data-edit-id');
+        if (editId && originalHTMLMap.has(editId)) {
+          node.innerHTML = originalHTMLMap.get(editId);
+        }
+      });
+      updateStatusLabel(0, 'Restored original text');
+      if (!isEditing && actionsPanel) actionsPanel.hidden = true;
+    });
+  }
+
+  // Restore any saved edits on startup, and auto-open if ?edit=1 is in the URL
+  const restoredCount = applySavedEditsToDOM();
+  if (restoredCount > 0 && actionsPanel) {
+    actionsPanel.hidden = false;
+  }
+  if (new URLSearchParams(window.location.search).get('edit') === '1') {
+    setEditingMode(true);
+  }
 });
