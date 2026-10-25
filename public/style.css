@@ -2088,10 +2088,10 @@ body.is-editing-text [contenteditable="true"]:focus {
 }
 
 /* ==========================================================================
-   04 / CENTRALISED WIDE PROBLEM SECTION WITH SCRIPT OVERDRAW
+   04 / CENTRALISED WIDE PROBLEM SECTION (ZERO-OVERLAP HAND-DRAWN ACCENTS)
    ========================================================================== */
 .problem-editorial-section {
-  padding: 7rem 0;
+  padding: 7.5rem 0;
 }
 
 .problem-centered-stage {
@@ -2105,61 +2105,120 @@ body.is-editing-text [contenteditable="true"]:focus {
 
 .problem-hand-kicker {
   display: inline-flex;
-  align-items: flex-end;
-  gap: 0.35rem;
-  margin-bottom: 0.75rem;
-  transform: translateX(-28px);
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+  pointer-events: none;
 }
 
 .problem-hand-kicker .hand-script-note {
   color: var(--ink-marker-amber);
   font-size: 1.55rem;
-  transform: rotate(-4deg);
+  transform: rotate(-3deg);
 }
 
 .problem-kicker-arrow {
-  width: 66px;
-  height: 38px;
+  width: 52px;
+  height: 30px;
   color: var(--ink-marker-amber);
-  margin-bottom: -6px;
+  transform: translateY(6px);
 }
 
-/* Override the 50% width limit so #problem heading is centralized and wide */
+/* Override the 50% width limit so #problem heading is centralized, wide, and has generous line-height */
 #problem .problem-wide-title {
   max-width: 24ch;
   width: 100%;
   margin: 0 auto;
   text-align: center;
-  font-size: clamp(2.15rem, 4vw, 3.45rem);
-  line-height: 1.18;
+  font-size: clamp(2.15rem, 3.8vw, 3.35rem);
+  line-height: 1.52;
 }
 
-.problem-circle-accent .hand-loop-circle {
+.problem-inline-underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.08em;
+}
+
+.problem-clean-underline {
+  position: absolute;
+  left: -1%;
+  bottom: -4px;
+  width: 102%;
+  height: 12px;
+}
+
+.problem-inline-underline.red .problem-clean-underline {
   color: var(--ink-marker-red);
 }
 
+.problem-inline-underline.emerald .problem-clean-underline {
+  color: var(--ink-marker-emerald);
+}
+
 .problem-wide-prose {
-  max-width: 68ch;
-  margin: 2rem auto 0;
+  max-width: 66ch;
+  margin: 2.25rem auto 0;
   text-align: center;
-  font-size: clamp(1.12rem, 1.5vw, 1.32rem);
-  line-height: 1.75;
+  font-size: clamp(1.12rem, 1.45vw, 1.3rem);
+  line-height: 2.05;
+}
+
+.problem-strike-only {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  color: var(--fg-muted);
+  margin: 0 0.12rem;
+}
+
+.problem-single-strike {
+  position: absolute;
+  left: -4%;
+  top: 52%;
+  width: 108%;
+  height: 14px;
+  transform: translateY(-50%) rotate(-2deg);
+  color: var(--ink-marker-red);
 }
 
 .problem-built-highlight {
   position: relative;
   display: inline-block;
+  white-space: nowrap;
   margin-left: 0.15rem;
+  padding-bottom: 0.08em;
   color: var(--fg-primary);
 }
 
 .problem-built-underline {
   position: absolute;
-  left: -3%;
-  bottom: -9px;
-  width: 106%;
-  height: 20px;
+  left: -2%;
+  bottom: -5px;
+  width: 104%;
+  height: 14px;
   color: var(--ink-marker-indigo);
+}
+
+.problem-hand-bottom-callout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.35rem;
+  pointer-events: none;
+}
+
+.problem-bottom-arrow {
+  width: 58px;
+  height: 32px;
+  color: var(--ink-marker-indigo);
+  transform: translateY(-6px);
+}
+
+.problem-hand-bottom-callout .hand-script-note.indigo {
+  color: var(--ink-marker-indigo);
+  font-size: 1.5rem;
+  transform: rotate(-2deg);
 }
 
 /* ==========================================================================
