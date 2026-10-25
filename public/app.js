@@ -425,8 +425,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /* --------------------------------------------------------------------------
      6. Inline Live Text Editor & Pin Commenting System
      -------------------------------------------------------------------------- */
-  const STORAGE_KEY = 'education_os_inline_edits_v1';
-  const COMMENTS_STORAGE_KEY = 'education_os_comments_v1';
+  const STORAGE_KEY = 'education_os_inline_edits_v2';
+  const COMMENTS_STORAGE_KEY = 'education_os_comments_v2';
+  try {
+    localStorage.removeItem('education_os_inline_edits_v1');
+    localStorage.removeItem('education_os_comments_v1');
+  } catch {
+    // Ignore storage access errors
+  }
 
   const toggleBtn = document.getElementById('editor-toggle-btn');
   const toggleLabel = document.getElementById('editor-toggle-label');
@@ -464,6 +470,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'main caption',
     'main figcaption',
     'main .section-meta > span:not(.line)',
+    'main .spec-key',
+    'main .spec-val',
     'main .spec-label',
     'main .spec-value',
     'main .col-kicker',

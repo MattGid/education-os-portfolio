@@ -23,38 +23,20 @@
       <div class="container">
         <div class="hero-layout">
           <div>
-            <div class="section-meta">
-              <span class="num">01</span>
-              <span class="line" aria-hidden="true"></span>
-              <span>Overview · Portfolio Case Study</span>
-            </div>
             <h1 class="display-hero">
               Education OS
               <span>From a personal learning problem to a live multi-tenant education platform.</span>
             </h1>
             <p class="lead-prose" style="margin-top: 1.5rem;">
-              Education OS is a live, continuously evolving multi-tenant learning platform for specialised, coach-led education. It brings learning materials, assignments, private submissions, feedback and live teaching into one protected environment while allowing each tenant to retain its own curriculum, workflows, branding and permissions.
+              Education OS is a live, multi-tenant education platform focused on music schools. It brings learning materials, assignments, feedback, and live teaching into one protected environment while allowing each institution to retain its own curriculum, workflows, branding, and permissions.
             </p>
             <div class="action-row">
               <a href="#platform-presentation" class="btn-minimal">Watch Platform Presentation ↓</a>
-              <a href="#journey" class="btn-minimal outline">Explore Journey Timeline →</a>
             </div>
           </div>
 
           <!-- Green 1: Open Hairline Specification Ledger Centered Vertically With Hero -->
           <div class="spec-ledger">
-            <div class="spec-row">
-              <span class="spec-key">Designer</span>
-              <span class="spec-val" style="display: flex; flex-direction: column; gap: 0.25rem;">
-                <strong>Matt Gidaszewski</strong>
-                <a href="https://www.linkedin.com/in/mattgidaszewski/" target="_blank" rel="noopener noreferrer" style="color: var(--fg-secondary); text-decoration: underline; font-size: 0.84rem;">linkedin.com/in/mattgidaszewski ↗</a>
-                <a href="https://www.portfoliomg.com" target="_blank" rel="noopener noreferrer" style="color: var(--fg-secondary); text-decoration: underline; font-size: 0.84rem;">www.portfoliomg.com ↗</a>
-              </span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-key">Role</span>
-              <span class="spec-val">Product Designer / Product Builder</span>
-            </div>
             <div class="spec-row">
               <span class="spec-key">Project Type</span>
               <span class="spec-val">Zero-to-one product, evolving multi-tenant SaaS</span>
@@ -84,10 +66,10 @@
         <div class="video-header-bar">
           <div>
             <h2 class="section-title" style="margin-bottom: 0.35rem;">
-              Presenting <em>Education OS in action</em>
+              Education OS <em>in action</em>
             </h2>
             <p class="body-prose" style="max-width: 64ch;">
-              This walkthrough showcases the <strong>Melodina Hub</strong> tenant, a real music school that has already been using the platform in active production for more than six months, demonstrating how curriculum libraries, persistent homework, private practice recordings and live teaching work together in practice.
+              In this video, Matt and Teici (owner of Melodina Hub, which has been in active production for over a year now) walk through the platform to share why it came to be and what it is all about.
             </p>
           </div>
         </div>
@@ -130,24 +112,6 @@
           </div>
           <input type="file" id="local-video-picker" accept="video/*" style="display: none;" aria-hidden="true" />
         </div>
-
-        <!-- Green 2: Moved Down Directly Under the Video -->
-        <div class="overview-columns">
-          <div>
-            <span class="col-kicker">Platform Architecture</span>
-            <h3 class="col-heading">Protected Multi-Tenant Environment for Coach-Led Schools</h3>
-            <p class="body-prose">
-              Each school operates inside a protected boundary where curriculum, assignments, private media submissions, feedback and live classes remain connected over time without forcing different disciplines into a generic LMS template.
-            </p>
-          </div>
-          <div>
-            <span class="col-kicker" style="color: var(--accent-amber);">Practice Evolution</span>
-            <h3 class="col-heading">Carrying Design Decisions Into Working Software</h3>
-            <p class="body-prose">
-              Instead of stopping at flows, screens and prototypes, I used AI-assisted development to carry product decisions into a working React, TypeScript and Supabase application. The live product became part of the design loop, allowing me to test routing, permissions, data states and real learning workflows in context.
-            </p>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -156,13 +120,8 @@
          ====================================================================== -->
     <section id="ux-coach" class="section-block">
       <div class="container">
-        <div class="section-meta">
-          <span class="num">02</span>
-          <span class="line" aria-hidden="true"></span>
-          <span>Coach Panel &amp; Classroom</span>
-        </div>
         <h2 class="ux-big-headline">
-          User Experience Level Access <span class="role-coach">Coach</span>
+          User Experience <span class="role-coach">Coach</span>
         </h2>
 
         <div class="ux-coach-grid">
@@ -218,13 +177,8 @@
          ====================================================================== -->
     <section id="ux-student" class="section-block">
       <div class="container">
-        <div class="section-meta">
-          <span class="num">03</span>
-          <span class="line" aria-hidden="true"></span>
-          <span>My Corner &amp; Classroom</span>
-        </div>
         <h2 class="ux-big-headline">
-          User Experience Level Access <span class="role-student">Student</span>
+          User Experience <span class="role-student">Student</span>
         </h2>
 
         <div class="ux-student-zones">
@@ -292,68 +246,41 @@
     </section>
 
     <!-- ======================================================================
-         04 / THE PROBLEM (2-COLUMN PROSE + GREEN 3 RIGHT UNDERNEATH)
+         04 / THE PROBLEM (SIMPLIFIED)
          ====================================================================== -->
     <section id="problem" class="section-block">
       <div class="container">
-        <div class="section-meta">
-          <span class="num">04</span>
-          <span class="line" aria-hidden="true"></span>
-          <span>The Problem</span>
-        </div>
         <h2 class="section-title">
           It did not begin with an ambition to build an LMS.<br />
-          <em>It began with a problem I experienced personally while studying music.</em>
+          <em>It began with a problem I experienced personally while studying music. on-line and offline.</em>
         </h2>
 
-        <!-- Content from 02 arranged into Two Columns -->
-        <div class="two-col-editorial">
-          <div>
-            <p class="body-prose">
-              Between lessons, I needed to keep references together, send learning materials back and forth, record my practice for my coach and receive feedback on those recordings.
-            </p>
-            <p class="body-prose">
-              The workflow was fragmented across different tools, tedious to manage and difficult to revisit later. I could not find a platform that handled this ongoing learner-coach relationship in the way I needed. <strong>So I started building one.</strong>
-            </p>
-          </div>
+        <p class="lead-prose" style="max-width: 62ch; margin-top: 1rem;">
+          Between lessons, sharing sheet music, backing tracks, practice recordings, and coach feedback was scattered across chat threads, cloud links, and separate call tools. I could not find a platform built for this ongoing learner-coach loop, <strong>so I built one.</strong>
+        </p>
 
-          <div class="editorial-quote">
-            <span class="col-kicker" style="color: var(--accent-amber);">Initial Product Hypothesis</span>
-            <p>
-              “References, practice, assignments, recordings and feedback should form one continuous learning relationship rather than disappear across messages, links and separate services.”
-            </p>
-          </div>
-        </div>
-
-        <!-- Green 3: Placed Right Underneath the Two-Column 02 Content -->
-        <div class="contrast-underneath">
+        <div class="contrast-underneath" style="margin-top: 2rem;">
           <div class="contrast-group">
             <div class="contrast-header">
-              <span style="color: var(--accent-coral);">Before · Fragmented Tool Sprawl</span>
-              <span style="color: var(--fg-muted);">Ephemeral &amp; Disconnected</span>
+              <span style="color: var(--accent-coral);">Before · Fragmented Tools</span>
             </div>
             <div class="tag-list">
               <span class="tag-minimal rose">Scattered Chat Threads</span>
-              <span class="tag-minimal rose">Unlisted Video Links</span>
-              <span class="tag-minimal rose">Expired File Transfers</span>
+              <span class="tag-minimal rose">Expired File Links</span>
               <span class="tag-minimal rose">Lost Practice Audio</span>
-              <span class="tag-minimal rose">Unlinked Coach Notes</span>
-              <span class="tag-minimal rose">Separate Call Links</span>
+              <span class="tag-minimal rose">Separate Video Calls</span>
             </div>
           </div>
 
           <div class="contrast-group">
             <div class="contrast-header">
-              <span style="color: var(--accent-emerald);">After · Continuous Learning Relationship</span>
-              <span style="color: var(--accent-emerald);">Persistent &amp; Tenant-Scoped</span>
+              <span style="color: var(--accent-emerald);">After · One Continuous Loop</span>
             </div>
             <div class="tag-list">
-              <span class="tag-minimal teal">01 References</span>
-              <span class="tag-minimal teal">→ 02 Practice</span>
-              <span class="tag-minimal teal">→ 03 Assignments</span>
-              <span class="tag-minimal teal">→ 04 Private Recordings</span>
-              <span class="tag-minimal teal">→ 05 Contextual Feedback</span>
-              <span class="tag-minimal teal">→ 06 Live Teaching</span>
+              <span class="tag-minimal teal">01 Library</span>
+              <span class="tag-minimal teal">→ 02 Homework</span>
+              <span class="tag-minimal teal">→ 03 Practice Uploads</span>
+              <span class="tag-minimal teal">→ 04 Live Classroom</span>
             </div>
           </div>
         </div>
