@@ -425,13 +425,15 @@ document.addEventListener('DOMContentLoaded', () => {
   /* --------------------------------------------------------------------------
      6. Inline Live Text Editor & Pin Commenting System
      -------------------------------------------------------------------------- */
-  const STORAGE_KEY = 'education_os_inline_edits_v3';
-  const COMMENTS_STORAGE_KEY = 'education_os_comments_v3';
+  const STORAGE_KEY = 'education_os_inline_edits_v4';
+  const COMMENTS_STORAGE_KEY = 'education_os_comments_v4';
   try {
     localStorage.removeItem('education_os_inline_edits_v1');
     localStorage.removeItem('education_os_comments_v1');
     localStorage.removeItem('education_os_inline_edits_v2');
     localStorage.removeItem('education_os_comments_v2');
+    localStorage.removeItem('education_os_inline_edits_v3');
+    localStorage.removeItem('education_os_comments_v3');
   } catch {
     // Ignore storage access errors
   }
@@ -484,6 +486,9 @@ document.addEventListener('DOMContentLoaded', () => {
     'main .stage-date',
     'main .stage-tab',
     'main .minimal-tab-btn',
+    'main .flow-lane-index',
+    'main .flow-node-step',
+    'main .flow-node-badge',
     'main .clean-step-row > span',
     'main .comp-table-row > span',
     'main .contrast-header > span',
